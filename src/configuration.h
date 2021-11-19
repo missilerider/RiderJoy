@@ -1,0 +1,9 @@
+ADD_BUTTON(PIN(7), 0)->i();
+
+ADD_BUTTON(PIN(7), 16);
+
+ADD_SWITCH2(PIN(14), PIN(15), 1, 2)->alwaysOn();
+
+ADD_SWITCH3(PIN(14), PIN(15), 3, 4, 5)->alwaysOn();
+
+//ADD_ROTARY_BUTTONS(MCP0(2), MCP0(3), 4, 5);
