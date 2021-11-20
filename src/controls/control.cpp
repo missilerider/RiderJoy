@@ -45,3 +45,14 @@ void Control::setupPullup(Input pin) {
             break;
     }
 }
+
+void Control::setAxis(Joystick_ *j, uint8_t axis, uint16_t value) {
+    switch(axis) {
+        case AXIS_X: j->setXAxis(value); break;
+        case AXIS_Y: j->setYAxis(value); break;
+        case AXIS_Z: j->setZAxis(value); break;
+        case AXIS_RX: j->setRxAxis(value); break;
+        case AXIS_RY: j->setRyAxis(value); break;
+        case AXIS_RZ: j->setRzAxis(value); break;
+    }
+}

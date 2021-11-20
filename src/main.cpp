@@ -6,6 +6,7 @@
 #include "controls/button.h"
 #include "controls/switch.h"
 #include "controls/rotaryButton.h"
+#include "controls/pot.h"
 
 #include "config_macros.h"
 
@@ -33,22 +34,51 @@ void setup() {
   readConfig(ctrl, &numC);
 
   int buttons = -1, k;
+  uint8_t axis[11];
+  memset(axis, 0, sizeof(uint8_t)*11);
 
   for(n=0; n < numC; n++) {
     k = ctrl[n]->getHighestJoyButton();
     if(k > buttons) buttons = k;
+
+    ctrl[n]->getAxisRequirements(axis);
   }
 
   p("Botones: ");
   pln(buttons);
 
   joy = new Joystick_(JOYSTICK_DEFAULT_REPORT_ID, 
-    JOYSTICK_TYPE_GAMEPAD, buttons + 1,
+    JOYSTICK_TYPE_GAMEPAD, 
+    //JOYSTICK_TYPE_JOYSTICK, 
+    buttons + 1,
     JOYSTICK_DEFAULT_HATSWITCH_COUNT,
-    false, false, false, false, false, false,
-    false, false, false, false, false);
+    axis[AXIS_X]>0, axis[AXIS_Y]>0, axis[AXIS_Z]>0, 
+    axis[AXIS_RX]>0, axis[AXIS_RY]>0, axis[AXIS_RZ]>0, 
+    false, false, false, false, false); //axis[AXIS_RUDDER]>0, axis[AXIS_THROTTLE]>0, axis[AXIS_ACCEL]>0, axis[AXIS_BRAKE]>0, axis[AXIS_STEERING]>0);
+
+  p("Final Axis: ");
+  p(axis[AXIS_X]>0 ? 1 : 0);
+  p(axis[AXIS_Y]>0 ? 1 : 0);
+  p(axis[AXIS_Z]>0 ? 1 : 0);
+  p(axis[AXIS_RX]>0 ? 1 : 0);
+  p(axis[AXIS_RY]>0 ? 1 : 0);
+  p(axis[AXIS_RZ]>0 ? 1 : 0);
+  pln("");
 
   joy->begin(false); // autoSendMode = false
+
+  joy->setXAxisRange(0, 1023);
+  joy->setYAxisRange(0, 1023);
+  joy->setZAxisRange(0, 1023);
+  joy->setRxAxisRange(0, 1023);
+  joy->setRyAxisRange(0, 1023);
+  joy->setRzAxisRange(0, 1023);
+
+  joy->setRudderRange(0, 1023);
+  joy->setAcceleratorRange(0, 1023);
+  joy->setBrakeRange(0, 1023);
+  joy->setSteeringRange(0, 1023);
+  joy->setThrottleRange(0, 1023);
 
   k = 0;
   for(n = 0; n < numC; n++) {
