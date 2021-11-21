@@ -1,22 +1,36 @@
 #include <Arduino.h>
 
-#define MOMENTARY_MS    20;
+#ifndef MOMENTARY_MS
+    #define MOMENTARY_MS    50;
+#endif
+#ifndef IDLE_MS
+    #define IDLE_MS    0;
+#endif
 
 extern unsigned long now;
 
 class Timer {
 private:
-    uint16_t ms;
-    unsigned long t0 = 0; // t0: pulsacion inicial
+    uint16_t ms = MOMENTARY_MS;
+    uint16_t idle = IDLE_MS;
+
+    unsigned long t0 = 0; // t0: momento de pulsacion del botón
     bool lastPressed = false;
 
 public:
-    Timer() {
-        this->ms = MOMENTARY_MS;
-    }
+    Timer() { }
 
     Timer(uint16_t ms) {
         this->ms = ms;
+    }
+
+    Timer(uint16_t ms, uint16_t idle) {
+        this->ms = ms;
+        this->idle = idle;
+    }
+
+    void setIdle(uint16_t idle) {
+        this->idle = idle;
     }
 
     void tick(bool pressed) {
@@ -30,8 +44,10 @@ public:
         } else {
             // Si estabamos pulsando antes
             if(!pressed) { // ...pero acabamos de soltar
-                t0 = 0;
-                this->lastPressed = false;
+                if(now > t0 + idle) { // ...y hemos pasado el tiempo de espera para repetir pulsación
+                    t0 = 0;
+                    this->lastPressed = false;
+                }
             }
         }
     }

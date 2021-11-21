@@ -6,6 +6,8 @@
 #include <Adafruit_MCP23X17.h>
 #include <Joystick.h>
 
+#include "timer.h"
+
 #define AXIS_X 0
 #define AXIS_Y 1
 #define AXIS_Z 2

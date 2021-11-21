@@ -15,6 +15,13 @@ Button *Button::i() {
     return this;
 }
 
+Button *Button::momentary() {
+    if(this->timer == NULL)
+        this->timer = new Timer();
+
+    return this;
+}
+
 void Button::init() {
     this->setupPullup(this->input);
     p(this->input);
@@ -23,10 +30,17 @@ void Button::init() {
 }
 
 void Button::process(Joystick_ *j) {
-    j->setButton(
-        this->jButton, 
-        this->readDigital(this->input) == LOW ? 
-            (this->inverted ? 0 : 1) : 
-            (this->inverted ? 1 : 0)
-    );
+    // AlwaysOn o Momentary?
+    if(this->timer == NULL) {
+        j->setButton(
+            this->jButton, 
+            this->readDigital(this->input) == LOW ? 
+                (this->inverted ? 0 : 1) : 
+                (this->inverted ? 1 : 0)
+        );
+    } else {
+        this->timer->tick(this->readDigital(this->input) == (this->inverted ? HIGH : LOW));
+
+        j->setButton(this->jButton, this->timer->isPushed() ? 1 : 0);
+    }
 }

@@ -28,4 +28,5 @@
 #define IS_MCP(x) (GET_PIN_TYPE(x) == TYPE_MCP)
 #define IS_PIN(x) (GET_PIN_TYPE(x) == TYPE_PIN)
 
-#define MCP_ID(x) ((x)>>12)
+#define MCP_ID(x) ((x & 0b111000000) >> 6)
+#define MCP_PIN(x) (x & 0b1111)

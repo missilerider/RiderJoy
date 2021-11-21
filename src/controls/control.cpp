@@ -3,9 +3,16 @@
 
 extern Adafruit_MCP23X17 mcp[8];
 
-void Control::init() {
+void Control::prepare() {
     for(uint8_t n = 0; n < 8; n++) {
-        mcp[n].begin_I2C(n);
+        p("MCP ");
+        p(n);
+
+        if(mcp[n].begin_I2C(0x20 + n)) {
+            pln(" OK");
+        } else {
+            pln(" not found!");
+        }
     }
 }
 
@@ -15,7 +22,7 @@ uint8_t Control::readDigital(Input pin) {
             return digitalRead(pin);
 
         case TYPE_MCP:
-            return mcp[MCP_ID(pin)].digitalRead(MCP_PORT(pin));
+            return mcp[MCP_ID(pin)].digitalRead(MCP_PIN(pin));
     }
 
     return 5;
@@ -27,7 +34,7 @@ uint16_t Control::readAnalog(Input pin) {
             return analogRead(pin);
 
         case TYPE_MCP:
-            return mcp[MCP_ID(pin)].digitalRead(MCP_PORT(pin)) == LOW ? 1024 : 0;
+            return mcp[MCP_ID(pin)].digitalRead(MCP_PIN(pin)) == LOW ? 1024 : 0;
     }
 
     return 5;
@@ -41,7 +48,7 @@ void Control::setupPullup(Input pin) {
             break;
 
         case TYPE_MCP:
-            mcp[MCP_ID(pin)].pinMode(MCP_PORT(pin), INPUT_PULLUP);
+            mcp[MCP_ID(pin)].pinMode(MCP_PIN(pin), INPUT_PULLUP);
             break;
     }
 }

@@ -1,16 +1,18 @@
 #include <Arduino.h>
 
+#include "config_global.h"
 #include "debug.h"
 
 #include "controls/control.h"
 #include "controls/button.h"
 #include "controls/switch.h"
 #include "controls/rotaryButton.h"
+#include "controls/rotaryAxis.h"
 #include "controls/pot.h"
 
-#include "config_macros.h"
-
 #include <Joystick.h>
+
+#include "config_macros.h"
 
 #define UPDATEMILLIS 10 // Milisegundos entre actualizaciones de USB
 
@@ -30,6 +32,27 @@ void setup() {
 #ifdef DEBUG
   Serial1.begin(115200);
 #endif
+
+  pln("");
+  pln("RiderIndustries HOTAS init...");
+
+/*  Adafruit_MCP23X17 mcp;
+
+  if (!mcp.begin_I2C(0x20)) {
+  //if (!mcp.begin_SPI(CS_PIN)) {
+    pln("Error.");
+    while (1);
+  }
+
+   // configure button pin for input with pull up
+  mcp.pinMode(0, INPUT_PULLUP);
+
+  while(1) {
+    p(mcp.digitalRead(0));
+  }
+  return;*/
+
+  Control::prepare();
 
   readConfig(ctrl, &numC);
 
@@ -56,29 +79,28 @@ void setup() {
     axis[AXIS_RX]>0, axis[AXIS_RY]>0, axis[AXIS_RZ]>0, 
     false, false, false, false, false); //axis[AXIS_RUDDER]>0, axis[AXIS_THROTTLE]>0, axis[AXIS_ACCEL]>0, axis[AXIS_BRAKE]>0, axis[AXIS_STEERING]>0);
 
-  p("Final Axis: ");
+  p("Axis: ");
   p(axis[AXIS_X]>0 ? 1 : 0);
   p(axis[AXIS_Y]>0 ? 1 : 0);
   p(axis[AXIS_Z]>0 ? 1 : 0);
   p(axis[AXIS_RX]>0 ? 1 : 0);
   p(axis[AXIS_RY]>0 ? 1 : 0);
-  p(axis[AXIS_RZ]>0 ? 1 : 0);
-  pln("");
+  pln(axis[AXIS_RZ]>0 ? 1 : 0);
 
   joy->begin(false); // autoSendMode = false
 
-  joy->setXAxisRange(0, 1023);
-  joy->setYAxisRange(0, 1023);
-  joy->setZAxisRange(0, 1023);
-  joy->setRxAxisRange(0, 1023);
-  joy->setRyAxisRange(0, 1023);
-  joy->setRzAxisRange(0, 1023);
+  joy->setXAxisRange(0, 1024);
+  joy->setYAxisRange(0, 1024);
+  joy->setZAxisRange(0, 1024);
+  joy->setRxAxisRange(0, 1024);
+  joy->setRyAxisRange(0, 1024);
+  joy->setRzAxisRange(0, 1024);
 
-  joy->setRudderRange(0, 1023);
-  joy->setAcceleratorRange(0, 1023);
-  joy->setBrakeRange(0, 1023);
-  joy->setSteeringRange(0, 1023);
-  joy->setThrottleRange(0, 1023);
+/*  joy->setRudderRange(0, 1024);
+  joy->setAcceleratorRange(0, 1024);
+  joy->setBrakeRange(0, 1024);
+  joy->setSteeringRange(0, 1024);
+  joy->setThrottleRange(0, 1024);*/
 
   k = 0;
   for(n = 0; n < numC; n++) {
@@ -89,6 +111,9 @@ void setup() {
   }
 
   numPoll = k;
+
+  p("Numpoll: ");
+  pln(numPoll);
 }
 
 void loop() {
