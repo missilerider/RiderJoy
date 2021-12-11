@@ -3,12 +3,12 @@
 #include "config_global.h"
 #include "debug.h"
 
-#include "controls/control.h"
-#include "controls/button.h"
-#include "controls/switch.h"
-#include "controls/rotaryButton.h"
-#include "controls/rotaryAxis.h"
-#include "controls/pot.h"
+#include "control.h"
+#include "button.h"
+#include "switch.h"
+#include "rotaryButton.h"
+#include "rotaryAxis.h"
+#include "pot.h"
 
 #include <Joystick.h>
 
@@ -36,21 +36,6 @@ void setup() {
   pln("");
   pln("RiderIndustries HOTAS init...");
 
-/*  Adafruit_MCP23X17 mcp;
-
-  if (!mcp.begin_I2C(0x20)) {
-  //if (!mcp.begin_SPI(CS_PIN)) {
-    pln("Error.");
-    while (1);
-  }
-
-   // configure button pin for input with pull up
-  mcp.pinMode(0, INPUT_PULLUP);
-
-  while(1) {
-    p(mcp.digitalRead(0));
-  }
-  return;*/
 
   Control::prepare();
 
@@ -77,7 +62,7 @@ void setup() {
     JOYSTICK_DEFAULT_HATSWITCH_COUNT,
     axis[AXIS_X]>0, axis[AXIS_Y]>0, axis[AXIS_Z]>0, 
     axis[AXIS_RX]>0, axis[AXIS_RY]>0, axis[AXIS_RZ]>0, 
-    false, false, false, false, false); //axis[AXIS_RUDDER]>0, axis[AXIS_THROTTLE]>0, axis[AXIS_ACCEL]>0, axis[AXIS_BRAKE]>0, axis[AXIS_STEERING]>0);
+    axis[AXIS_RUDDER]>0, axis[AXIS_THROTTLE]>0, false, false, false); //axis[AXIS_RUDDER]>0, axis[AXIS_THROTTLE]>0, axis[AXIS_ACCEL]>0, axis[AXIS_BRAKE]>0, axis[AXIS_STEERING]>0);
 
   p("Axis: ");
   p(axis[AXIS_X]>0 ? 1 : 0);
@@ -95,12 +80,12 @@ void setup() {
   joy->setRxAxisRange(0, 1024);
   joy->setRyAxisRange(0, 1024);
   joy->setRzAxisRange(0, 1024);
+  joy->setRudderRange(0, 1024);
+  joy->setThrottleRange(0, 1024);
 
-/*  joy->setRudderRange(0, 1024);
-  joy->setAcceleratorRange(0, 1024);
+/*  joy->setAcceleratorRange(0, 1024);
   joy->setBrakeRange(0, 1024);
-  joy->setSteeringRange(0, 1024);
-  joy->setThrottleRange(0, 1024);*/
+  joy->setSteeringRange(0, 1024); */
 
   k = 0;
   for(n = 0; n < numC; n++) {
@@ -124,14 +109,15 @@ void loop() {
     pollCtrl[n]->poll();
   }
 
+  // Si no es momento de actualizar, salimos
   if(now - lastUpdate < UPDATEMILLIS) return;
 
+  // Procesa todos los controles
   for(n = 0; n < numC; n++) {
     ctrl[n]->process(joy);
   }
 
+  // Actualiza el joystick
   joy->sendState();
   lastUpdate = now;
-
-// put your main code here, to run repeatedly:
 }

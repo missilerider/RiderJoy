@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../debug.h"
+#include "debug.h"
 
-#include "../pin_macros.h"
+#include "pin_macros.h"
 #include <Adafruit_MCP23X17.h>
 #include <Joystick.h>
 
@@ -14,10 +14,10 @@
 #define AXIS_RX 3
 #define AXIS_RY 4
 #define AXIS_RZ 5
-
-/* Ejes no usados (todavía?)
 #define AXIS_RUDDER 6
 #define AXIS_THROTTLE 7
+
+/* Ejes no usados (todavía?)
 #define AXIS_ACCEL 8
 #define AXIS_BRAKE 9
 #define AXIS_STEERING 10
@@ -40,6 +40,7 @@ public:
 protected:
     uint8_t readDigital(Input pin);
     uint16_t readAnalog(Input pin);
+    uint16_t muxRead(uint8_t id, uint8_t pin);
     void setupPullup(Input pin);
     void setAxis(Joystick_ *j, uint8_t axis, uint16_t value);
 };
