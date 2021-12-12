@@ -1,6 +1,6 @@
 #pragma once
 
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
   #define pln(x) Serial1.println(x);

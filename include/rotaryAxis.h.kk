@@ -1,9 +1,5 @@
 #include "rotary.h"
 
-#ifndef ROTARY_IDLE_TIMEOUT
-    #define ROTARY_IDLE_TIMEOUT 50
-#endif
-
 class RotaryAxis : public Rotary {
 private:
     uint8_t axis;

@@ -1,3 +1,5 @@
+#pragma once
+
 // Tiempo de pulsación para las configuraciones momentáneas, en milisegundos
 /** Descripción:
  * Si un botón momentáneo se mantiene pulsado, el botón del joystick permanecerá 
@@ -8,8 +10,8 @@
  * durante "idle" milisegundos y se volverá a encender MOMENTARY_MS milisegundos 
  * si se sigue girando.
  */
-#define MOMENTARY_MS    50;
-#define IDLE_MS         0;
+#define MOMENTARY_MS    1000;
+#define IDLE_MS         50;
 
 /** Milisegundos a esperar para cancelar la aceleración de un rotary axis
  */

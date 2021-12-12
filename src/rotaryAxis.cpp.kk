@@ -1,4 +1,5 @@
-#include "RotaryAxis.h"
+#include "config_global.h"
+#include "rotaryAxis.h"
 
 extern unsigned long now;
 

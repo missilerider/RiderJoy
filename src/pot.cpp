@@ -23,10 +23,18 @@ void Pot::init() {
 }
 
 void Pot::process(Joystick_ *j) {
-    this->setAxis(
-        j, 
-        this->axis, 
-        this->readAnalog(this->input)
-    );
+    if(this->inverted) {
+        this->setAxis(
+            j, 
+            this->axis, 
+            this->readAnalog(this->input)
+        );
+    } else {
+        this->setAxis(
+            j, 
+            this->axis, 
+            1023 - this->readAnalog(this->input)
+        );
+    }
     //pln(this->readAnalog(this->input));
 }

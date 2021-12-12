@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "config_global.h"
 
 #ifndef MOMENTARY_MS
     #define MOMENTARY_MS    50;
@@ -16,6 +17,7 @@ private:
 
     unsigned long t0 = 0; // t0: momento de pulsacion del botón
     bool lastPressed = false;
+    bool forceFullCycle = false;
 
 public:
     Timer() { }
@@ -34,6 +36,13 @@ public:
     }
 
     void tick(bool pressed) {
+        // Si se fuerza la pulsación el ciclo completo forzamos que se mantenga el input pulsado hasta que sea necesario
+        if(this->forceFullCycle) {
+            if(now - t0 <= ms) {
+                pressed = true;
+            }
+        }
+
         if(!this->lastPressed) {
             // Si antes estaba sin pulsar
             if(pressed) { // ...pero acabamos de pulsar
@@ -56,5 +65,14 @@ public:
         return this->lastPressed ? 
             (now - t0 <= ms) : 
             false;
+    }
+
+    void reset() {
+        this->lastPressed = false;
+        this->t0 = 0;
+    }
+
+    void forceFull() {
+        this->forceFullCycle = true;
     }
 };
