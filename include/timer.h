@@ -16,6 +16,7 @@ private:
 
     unsigned long t0 = 0; // t0: momento de pulsacion del botón
     bool lastPressed = false;
+    bool forceFullPress = false;
 
 public:
     Timer() { }
@@ -27,6 +28,12 @@ public:
     Timer(uint16_t ms, uint16_t idle) {
         this->ms = ms;
         this->idle = idle;
+    }
+
+    Timer(uint16_t ms, uint16_t idle, bool fullPress) {
+        this->ms = ms;
+        this->idle = idle;
+        this->forceFullPress = fullPress;
     }
 
     void setIdle(uint16_t idle) {
