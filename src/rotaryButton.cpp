@@ -7,6 +7,9 @@ RotaryButton::RotaryButton(Input i1, Input i2, uint8_t j1, uint8_t j2, uint8_t s
     this->j2 = j2;
 
     this->minS = steps;
+
+    t1.forceFull();
+    t2.forceFull();
 }
 
 uint8_t RotaryButton::getHighestJoyButton() {

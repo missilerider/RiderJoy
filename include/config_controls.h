@@ -1,36 +1,38 @@
-ADD_BUTTON(MCP0(0), 0); // UFC - Botón 1
-ADD_BUTTON(MCP0(1), 1); // UFC - Botón 2
-ADD_BUTTON(MCP0(2), 2); // UFC - Botón 3
-ADD_BUTTON(MCP0(3), 3); // UFC - Botón 4
-ADD_BUTTON(MCP0(4), 4); // UFC - Botón 5
-ADD_BUTTON(MCP0(5), 5); // UFC - Botón 6
-ADD_BUTTON(MCP0(6), 6); // UFC - Botón 7
-ADD_BUTTON(MCP0(7), 7); // UFC - Botón 8
-ADD_BUTTON(MCP0(8), 8); // UFC - Botón 9
-ADD_BUTTON(MCP0(9), 9); // UFC - CLR
-ADD_BUTTON(MCP0(10), 10); // UFC - Botón 0
-ADD_BUTTON(MCP0(11), 11); // UFC - ENT
-ADD_BUTTON(MCP0(12), 12); // UFC - A/P
-ADD_BUTTON(MCP0(13), 13); // UFC - IFF
-ADD_BUTTON(MCP0(14), 14); // UFC - TCN
-ADD_BUTTON(MCP0(15), 15); // UFC - ILS
-ADD_BUTTON(MCP1(0), 16); // UFC - D/L
-ADD_BUTTON(MCP1(1), 17); // UFC - BCN
-ADD_BUTTON(MCP1(2), 18); // UFC - ONOFF
-ADD_BUTTON(MCP1(3), 19); // UFC - COM1 push
-ADD_BUTTON(MCP1(4), 20); // UFC - COM2 push
-ADD_BUTTON(MCP1(5), 21); // UFC - I/P
-ADD_BUTTON(MCP1(6), 22); // UFC - Sel1
-ADD_BUTTON(MCP1(7), 23); // UFC - Sel2
-ADD_BUTTON(MCP1(8), 24); // UFC - Sel3
-ADD_BUTTON(MCP1(9), 25); // UFC - Sel4
-ADD_BUTTON(MCP1(10), 26); // UFC - Sel5
-ADD_ROTARY_BUTTONS(PIN(6), PIN(7), 28, 27, 4)->minIdle(20)->a(1, 1); // UFC - COM1 selector
-ADD_ROTARY_BUTTONS(PIN(8), PIN(9), 30, 29, 4)->minIdle(20)->a(1, 1); // UFC - COM2 selector
-ADD_POT(PIN(A0), AXIS_X); // UFC - COM1 vol
-ADD_POT(PIN(A1), AXIS_Y); // UFC - COM2 vol
-ADD_POT(PIN(A2), AXIS_Z); // UFC - Brightness
-ADD_SWITCH3(MCP1(11), PIN(0), 33, 32, 31)->momentary(); // UFC - ADF
+ADD_BUTTON(MCP0(0), 0); //  - 
+ADD_BUTTON(MCP0(1), 1); //  - 
+ADD_BUTTON(MCP0(2), 2); //  - 
+ADD_BUTTON(MCP0(3), 3); //  - 
+ADD_BUTTON(MCP0(4), 4); //  - 
+ADD_BUTTON(MCP0(5), 5); //  - 
+ADD_BUTTON(MCP0(6), 6); //  - 
+ADD_BUTTON(MCP0(7), 7); //  - 
+ADD_BUTTON(MCP0(8), 8); //  - 
+ADD_BUTTON(MCP0(9), 9); //  - 
+ADD_BUTTON(MCP0(10), 10); //  - 
+ADD_BUTTON(MCP0(11), 11); //  - 
+ADD_BUTTON(MCP0(12), 12); //  - 
+ADD_BUTTON(MCP0(13), 13); //  - 
+ADD_BUTTON(MCP0(14), 14); //  - 
+ADD_BUTTON(MCP0(15), 15); //  - 
+ADD_BUTTON(MCP1(0), 16); //  - 
+ADD_BUTTON(MCP1(1), 17); //  - 
+ADD_BUTTON(MCP1(2), 18); //  - 
+ADD_BUTTON(MCP1(3), 19); //  - 
+ADD_BUTTON(MCP1(4), 20); //  - 
+ADD_BUTTON(MCP1(5), 21); //  - 
+ADD_BUTTON(MCP1(6), 22); //  - 
+ADD_BUTTON(MCP1(7), 23); //  - 
+ADD_BUTTON(MCP1(8), 24); //  - 
+ADD_BUTTON(MCP1(9), 25); //  - 
+ADD_BUTTON(MCP1(10), 26); //  - 
+ADD_BUTTON(MCP1(11), 27); //  - 
+ADD_BUTTON(MCP1(12), 28); //  - 
+ADD_BUTTON(MCP1(13), 29); //  - 
+ADD_BUTTON(MCP1(14), 30); //  - 
+ADD_BUTTON(MCP1(15), 31); //  - 
+ADD_ROTARY_BUTTONS(PIN(6), PIN(7), 33, 32, 2)->minIdle(20)->a(1, 1); //  - 
+ADD_ROTARY_BUTTONS(PIN(8), PIN(9), 35, 34, 2)->minIdle(20)->a(1, 1); //  - 
+
 /*
 
 // OK

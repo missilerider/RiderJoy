@@ -10,8 +10,8 @@
  * durante "idle" milisegundos y se volverá a encender MOMENTARY_MS milisegundos 
  * si se sigue girando.
  */
-#define MOMENTARY_MS    1000;
-#define IDLE_MS         50;
+#define MOMENTARY_MS    500;
+#define IDLE_MS         250;
 
 /** Milisegundos a esperar para cancelar la aceleración de un rotary axis
  */
