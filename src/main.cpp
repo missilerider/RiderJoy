@@ -5,9 +5,10 @@
 
 #include "control.h"
 #include "button.h"
-#include "switch.h"
+#include "switch3p.h"
+#include "switch2p.h"
 #include "rotaryButton.h"
-#include "rotaryAxis.h"
+//#include "rotaryAxis.h"
 #include "pot.h"
 
 #include <Joystick.h>

@@ -32,28 +32,28 @@ void Rotary::poll() {
     uint8_t a = this->readDigital(this->i1);
     uint8_t b = this->readDigital(this->i2);
 
-        if((this->lastA == a || this->lastB == b) && (this->lastA != a || this->lastB != b)) {
-            if(a == this->lastA) {
-                if(a == LOW) {
-                    if(b == LOW) this->step--;
-                    else this->step += this->calcStep();
-                } else {
-                    if(b == LOW) this->step++;
-                    else this->step -= this->calcStep();
-                }
-            } else { // a != lastA
-                if(b == LOW) {
-                    if(a == LOW) this->step++;
-                    else this->step -= this->calcStep();
-                } else {
-                    if(a == LOW) this->step--;
-                    else this->step += this->calcStep();
-                }
+    if((this->lastA == a || this->lastB == b) && (this->lastA != a || this->lastB != b)) {
+        if(a == this->lastA) {
+            if(a == LOW) {
+                if(b == LOW) this->step--;
+                else this->step += this->calcStep();
+            } else {
+                if(b == LOW) this->step++;
+                else this->step -= this->calcStep();
             }
-
-            this->lastA = a;
-            this->lastB = b;
+        } else { // a != lastA
+            if(b == LOW) {
+                if(a == LOW) this->step++;
+                else this->step -= this->calcStep();
+            } else {
+                if(a == LOW) this->step--;
+                else this->step += this->calcStep();
+            }
         }
+
+        this->lastA = a;
+        this->lastB = b;
+    }
 }
 
 void Rotary::endProcess() {

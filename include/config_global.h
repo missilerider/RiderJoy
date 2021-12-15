@@ -1,3 +1,5 @@
+#pragma once
+
 // Tiempo de pulsación para las configuraciones momentáneas, en milisegundos
 /** Descripción:
  * Si un botón momentáneo se mantiene pulsado, el botón del joystick permanecerá 
@@ -8,12 +10,12 @@
  * durante "idle" milisegundos y se volverá a encender MOMENTARY_MS milisegundos 
  * si se sigue girando.
  */
-#define MOMENTARY_MS    50;
-#define IDLE_MS         0;
+#define MOMENTARY_MS    50
+#define IDLE_MS         20
 
 /** Milisegundos a esperar para cancelar la aceleración de un rotary axis
  */
-#define ROTARY_IDLE_TIMEOUT     20;
+#define ROTARY_IDLE_TIMEOUT     20
 
 
 /** Se puede conectar un multiplexor de puertos analógicos ("AMUX") (74HC4067) para 

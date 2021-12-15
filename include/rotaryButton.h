@@ -3,9 +3,10 @@
 class RotaryButton : public Rotary {
 private:
     uint8_t j1, j2;
-    Timer t1, t2;
+    Timer *t1, *t2;
 
     uint8_t minS = 1;
+    int8_t lastDir = 0;
 
 public:
     RotaryButton(Input i1, Input i2, uint8_t j1, uint8_t j2, uint8_t steps);

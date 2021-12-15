@@ -2,8 +2,8 @@
 
 #define ADD_BUTTON(i, j) ((Button*)(c[last++] = new Button(i, j)))
 
-#define ADD_SWITCH3(i1, i2, j1, j2, j3) ((Switch*)(c[last++] = new Switch(i1, i2, j1, j2, j3)))
-#define ADD_SWITCH2(i1, i2, j1, j2) ((Switch*)(c[last++] = new Switch(i1, i2, j1, j2)))
+#define ADD_SWITCH3(i1, i2, j1, j2, j3) ((Switch3p*)(c[last++] = new Switch3p(i1, i2, j1, j2, j3)))
+#define ADD_SWITCH2(i, j1, j2) ((Switch2p*)(c[last++] = new Switch2p(i, j1, j2)))
 
 #define ADD_ROTARY_BUTTONS(i1, i2, j1, j2, s) ((RotaryButton*)(c[last++] = new RotaryButton(i1, i2, j1, j2, s)))
 

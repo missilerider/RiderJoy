@@ -1,5 +1,6 @@
 #pragma once
 
+// Comentar la siguiente línea para que no se escriba sobre Serial1 nada (producción)
 #define DEBUG
 
 #ifdef DEBUG

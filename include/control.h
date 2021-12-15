@@ -1,5 +1,7 @@
 #pragma once
 
+#include "config_global.h"
+
 #include "debug.h"
 
 #include "pin_macros.h"

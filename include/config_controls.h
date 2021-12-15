@@ -1,3 +1,46 @@
+ADD_ROTARY_BUTTONS(PIN(14), PIN(16), 0, 1, 2); //  - 
+
+ADD_BUTTON(PIN(4), 2)->momentaryFull(); //  - 
+ADD_BUTTON(PIN(4), 3)->momentary(); //  - 
+
+/*
+ADD_BUTTON(MCP0(0), 0); //  - 
+ADD_BUTTON(MCP0(1), 1); //  - 
+ADD_BUTTON(MCP0(2), 2); //  - 
+ADD_BUTTON(MCP0(3), 3); //  - 
+ADD_BUTTON(MCP0(4), 4); //  - 
+ADD_BUTTON(MCP0(5), 5); //  - 
+ADD_BUTTON(MCP0(6), 6); //  - 
+ADD_BUTTON(MCP0(7), 7); //  - 
+ADD_BUTTON(MCP0(8), 8); //  - 
+ADD_BUTTON(MCP0(9), 9); //  - 
+ADD_BUTTON(MCP0(10), 10); //  - 
+ADD_BUTTON(MCP0(11), 11); //  - 
+ADD_BUTTON(MCP0(12), 12); //  - 
+ADD_BUTTON(MCP0(13), 13); //  - 
+ADD_BUTTON(MCP0(14), 14); //  - 
+ADD_BUTTON(MCP0(15), 15); //  - 
+ADD_BUTTON(MCP1(0), 16); //  - 
+ADD_BUTTON(MCP1(1), 17); //  - 
+ADD_BUTTON(MCP1(2), 18); //  - 
+ADD_BUTTON(MCP1(3), 19); //  - 
+ADD_BUTTON(MCP1(4), 20); //  - 
+ADD_BUTTON(MCP1(5), 21); //  - 
+ADD_BUTTON(MCP1(6), 22); //  - 
+ADD_BUTTON(MCP1(7), 23); //  - 
+ADD_BUTTON(MCP1(8), 24); //  - 
+ADD_BUTTON(MCP1(9), 25); //  - 
+ADD_BUTTON(MCP1(10), 26); //  - 
+ADD_BUTTON(MCP1(11), 27); //  - 
+ADD_BUTTON(MCP1(12), 28); //  - 
+ADD_BUTTON(MCP1(13), 29); //  - 
+ADD_BUTTON(MCP1(14), 30); //  - 
+ADD_BUTTON(MCP1(15), 31); //  - 
+ADD_ROTARY_BUTTONS(PIN(6), PIN(7), 33, 32, 2)->minIdle(20)->a(1, 1); //  - 
+ADD_ROTARY_BUTTONS(PIN(8), PIN(9), 35, 34, 2)->minIdle(20)->a(1, 1); //  - 
+
+/*
+
 // OK
 //ADD_BUTTON(PIN(7), 0);
 
@@ -14,7 +57,7 @@ ADD_POT(PIN(A0), AXIS_Y);
 ADD_POT(PIN(A0), AXIS_Z);
 ADD_POT(PIN(A0), AXIS_RX);
 ADD_POT(PIN(A0), AXIS_RY);
-ADD_POT(PIN(A0), AXIS_RZ);*/
+ADD_POT(PIN(A0), AXIS_RZ);* /
 
 
 // PRUEBAS
@@ -24,7 +67,10 @@ ADD_POT(PIN(A0), AXIS_RZ);*/
 
 //ADD_ROTARY_AXIS(PIN(8), PIN(9), AXIS_X, 2)->i();
 
-ADD_BUTTON(PIN(7), 0)->momentary()->i(); // TEST - Boton 0
-ADD_SWITCH3(PIN(7), PIN(6), 1, 2, 3)->alwaysOn()->i(); // TEST - Switch 1-2-3
-ADD_SWITCH2(PIN(7), PIN(8), 4, 5)->alwaysOn()->i(); // TEST - Switch 4-5
-ADD_ROTARY_BUTTONS(PIN(7), PIN(8), 4, 5, 2)->minIdle(20)->i()->a(1, 1); // TEST - Rotary 6-7
+uint8_t j = 0;
+
+ADD_BUTTON(PIN(7), j++)->momentary(); // TEST - Boton 0
+ADD_SWITCH2(PIN(7), j++, j++)->momentary()->i(); // TEST - Switch 4-5
+ADD_SWITCH3(PIN(14), PIN(15), j++, j++, j++)->momentary(); // TEST - Switch 1-2-3
+//ADD_ROTARY_BUTTONS(PIN(7), PIN(8), j++, j++, j++)->minIdle(20)->i()->a(1, 1); // TEST - Rotary 6-7
+/* */

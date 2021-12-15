@@ -6,6 +6,12 @@ Button::Button(Input input, uint8_t jButton) {
     this->jButton = jButton;
 }
 
+Button::Button(Input input, uint8_t j1, uint8_t j2) {
+    this->input = input;
+    this->jButton = j1;
+    this->jButton2 = j2;
+}
+
 uint8_t Button::getHighestJoyButton() {
     return this->jButton;
 }
@@ -18,6 +24,15 @@ Button *Button::i() {
 Button *Button::momentary() {
     if(this->timer == NULL)
         this->timer = new Timer();
+
+    return this;
+}
+
+Button *Button::momentaryFull() {
+    if(this->timer == NULL) {
+        this->timer = new Timer();
+        this->timer->forceFull();
+    }
 
     return this;
 }
