@@ -1,9 +1,3 @@
-ADD_ROTARY_BUTTONS(PIN(14), PIN(16), 0, 1, 2); //  - 
-
-ADD_BUTTON(PIN(4), 2)->momentaryFull(); //  - 
-ADD_BUTTON(PIN(4), 3)->momentary(); //  - 
-
-/*
 ADD_BUTTON(MCP0(0), 0); //  - 
 ADD_BUTTON(MCP0(1), 1); //  - 
 ADD_BUTTON(MCP0(2), 2); //  - 
@@ -36,8 +30,8 @@ ADD_BUTTON(MCP1(12), 28); //  -
 ADD_BUTTON(MCP1(13), 29); //  - 
 ADD_BUTTON(MCP1(14), 30); //  - 
 ADD_BUTTON(MCP1(15), 31); //  - 
-ADD_ROTARY_BUTTONS(PIN(6), PIN(7), 33, 32, 2)->minIdle(20)->a(1, 1); //  - 
-ADD_ROTARY_BUTTONS(PIN(8), PIN(9), 35, 34, 2)->minIdle(20)->a(1, 1); //  - 
+ADD_ROTARY_BUTTONS(PIN(6), PIN(7), 33, 32, 2); //  - 
+ADD_ROTARY_BUTTONS(PIN(8), PIN(9), 35, 34, 2); //  - 
 
 /*
 

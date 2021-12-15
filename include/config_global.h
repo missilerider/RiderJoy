@@ -1,5 +1,7 @@
 #pragma once
 
+//#define DEBUG
+
 // Tiempo de pulsación para las configuraciones momentáneas, en milisegundos
 /** Descripción:
  * Si un botón momentáneo se mantiene pulsado, el botón del joystick permanecerá 

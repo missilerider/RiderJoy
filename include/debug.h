@@ -1,7 +1,7 @@
 #pragma once
 
 // Comentar la siguiente línea para que no se escriba sobre Serial1 nada (producción)
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
   #define pln(x) Serial1.println(x);
