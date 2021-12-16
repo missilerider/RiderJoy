@@ -12,7 +12,7 @@ uint8_t Switch2p::getHighestJoyButton() {
 }
 
 Switch2p *Switch2p::momentary() {
-    this->timer = new Timer();
+    this->timer = new Timer(MOMENTARY_LONG_MS);
     return this;
 }
 

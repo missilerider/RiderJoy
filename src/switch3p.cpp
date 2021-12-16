@@ -21,7 +21,7 @@ uint8_t Switch3p::getHighestJoyButton() {
 }
 
 Switch3p *Switch3p::momentary() {
-    this->timer = new Timer();
+    this->timer = new Timer(MOMENTARY_LONG_MS);
     return this;
 }
 

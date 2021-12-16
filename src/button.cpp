@@ -23,14 +23,14 @@ Button *Button::i() {
 
 Button *Button::momentary() {
     if(this->timer == NULL)
-        this->timer = new Timer();
+        this->timer = new Timer(MOMENTARY_LONG_MS);
 
     return this;
 }
 
 Button *Button::momentaryFull() {
     if(this->timer == NULL) {
-        this->timer = new Timer();
+        this->timer = new Timer(MOMENTARY_LONG_MS);
         this->timer->forceFull();
     }
 

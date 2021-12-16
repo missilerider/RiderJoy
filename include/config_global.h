@@ -11,9 +11,15 @@
  * En caso de un botón rotatorio que se apague solo (con "IDLE_MS"), se apagará 
  * durante "idle" milisegundos y se volverá a encender MOMENTARY_MS milisegundos 
  * si se sigue girando.
+ * 
+ * MOMENTARY_MS para rotatorios y otros con cambio rápido, como rotary encoders
+ * MOMENTARY_LONG_MS para pulsaciones lentas, como botones o switches
  */
 #define MOMENTARY_MS    50
 #define IDLE_MS         20
+
+#define MOMENTARY_LONG_MS   200
+#define IDLE_LONG_MS        80
 
 /** Milisegundos a esperar para cancelar la aceleración de un rotary axis
  */
