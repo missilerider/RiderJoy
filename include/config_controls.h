@@ -20,6 +20,9 @@ ADD_BUTTON(MCP1(2), 18); //  -
 ADD_BUTTON(MCP1(3), 19); //  - 
 ADD_BUTTON(MCP1(4), 20); //  - 
 ADD_BUTTON(MCP1(5), 21); //  - 
+
+ADD_SWITCH3(MCP1(6), MCP1(7), 22, 23, 35);
+
 ADD_BUTTON(MCP1(6), 22); //  - 
 ADD_BUTTON(MCP1(7), 23); //  - 
 ADD_BUTTON(MCP1(8), 24); //  - 
@@ -32,9 +35,9 @@ ADD_BUTTON(MCP1(14), 30); //  -
 ADD_BUTTON(MCP1(15), 31); //  - 
 ADD_ROTARY_BUTTONS(PIN(6), PIN(7), 33, 32, 2); //  - 
 ADD_ROTARY_BUTTONS(PIN(8), PIN(9), 35, 34, 2); //  - 
-ADD_POT(A0, AXIS_X)->exp(2.8f);
-ADD_POT(A1, AXIS_Y)->exp(2.8f);
-ADD_POT(A2, AXIS_Z)->exp(2.8f);
+ADD_POT(A0, AXIS_X);
+ADD_POT(A1, AXIS_Y);
+ADD_POT(A2, AXIS_Z);
 
 /*
 
