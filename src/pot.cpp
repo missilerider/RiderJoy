@@ -18,6 +18,12 @@ Pot *Pot::i() {
     return this;
 }
 
+Pot *Pot::exp(float e) {
+    this->e = e;
+
+    return this;
+}
+
 void Pot::init() {
     this->setupPullup(this->input);
 }
@@ -33,20 +39,28 @@ void Pot::process(Joystick_ *j) {
         (this->lastValue < 1023 && v == 1023)) {
 
         this->lastValue = v;
-        pln(this->lastValue);
+        pln(this->clamp(this->lastValue));
 
         if(this->inverted) {
             this->setAxis(
                 j, 
                 this->axis, 
-                v
+                this->clamp(v)
             );
         } else {
             this->setAxis(
                 j, 
                 this->axis, 
-                1023 - v
+                this->clamp(1023 - v)
             );
         }
     }
+}
+
+uint16_t Pot::clamp(uint16_t value) {
+    float v = value / 1023.0f; // [0,1]
+
+    v = powf(v, this->e);
+
+    return (uint16_t)(v * 1023.0f);
 }
