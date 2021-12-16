@@ -8,6 +8,8 @@ private:
     uint8_t axis = 0;
     bool inverted = false;
 
+    uint16_t lastValue;
+
 public: 
     Pot(Input input, uint8_t axis);
 

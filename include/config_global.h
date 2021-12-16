@@ -1,6 +1,6 @@
 #pragma once
 
-//#define DEBUG
+#define DEBUG
 
 // Tiempo de pulsación para las configuraciones momentáneas, en milisegundos
 /** Descripción:
@@ -48,3 +48,11 @@
 #define AMUX_PIN_IN1    A1
 #define AMUX_PIN_IN2    A2
 #define AMUX_PIN_IN3    A3
+
+
+
+/** Umbral que es necesario rebasar para que un potenciómetro cambie de valor (y no baile entre dos cifras)
+ * Si se indica el valor 1 no se registrarán cambios de 1 unidad en las lecturas, que es un valor típico para un potenciómetro normalito
+ * Si se deja a 0, todos los cambios de lectura se registrarán como movimientos del eje
+ */
+#define POT_ERROR       1
