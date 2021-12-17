@@ -13,9 +13,9 @@ Switch3p::Switch3p(Input i1, Input i2, uint8_t j1, uint8_t j2, uint8_t j3) {
 uint8_t Switch3p::getHighestJoyButton() {
     uint8_t max = this->j1;
 
-    if(this->j3 > max) max = this->j3;
+    if(this->j2 > max) max = this->j2;
 
-    if((this->j2 != 255) && (this->j2 > max)) max = this->j2;
+    if(this->j3 > max) max = this->j3;
 
     return max;
 }
@@ -48,18 +48,24 @@ void Switch3p::process(Joystick_ *j) {
     // 3 botones
     if(this->timer == NULL) {
         // Always ON
-        if(this->j2 != 255) {
-            j->setButton(this->j1, pin1 == LOW ? 1 : 0);
-            j->setButton(this->j3, pin2 == LOW ? 1 : 0);
-
-            if(pin1 == HIGH && pin2 == HIGH)
-                j->setButton(this->j2, 1);
-            else
+        switch(status) {
+            case 1:
+                j->setButton(this->j1, 1);
                 j->setButton(this->j2, 0);
-        } else {
-            // 2 botones
-            j->setButton(this->j1, pin1 == LOW ? 1 : 0);
-            j->setButton(this->j3, pin2 == LOW ? 1 : 0);
+                j->setButton(this->j3, 0);
+                break;
+
+            case 2:
+                j->setButton(this->j1, 0);
+                j->setButton(this->j2, 1);
+                j->setButton(this->j3, 0);
+                break;
+
+            case 3:
+                j->setButton(this->j1, 0);
+                j->setButton(this->j2, 0);
+                j->setButton(this->j3, 1);
+                break;
         }
     } else {
         

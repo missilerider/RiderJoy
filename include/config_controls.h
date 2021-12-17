@@ -21,10 +21,8 @@ ADD_BUTTON(MCP1(3), 19); //  -
 ADD_BUTTON(MCP1(4), 20); //  - 
 ADD_BUTTON(MCP1(5), 21); //  - 
 
-ADD_SWITCH3(MCP1(6), MCP1(7), 22, 23, 35)->momentary();
+ADD_SWITCH3(MCP1(6), MCP1(7), 22, 23, 36)->momentary();
 
-ADD_BUTTON(MCP1(6), 22); //  - 
-ADD_BUTTON(MCP1(7), 23); //  - 
 ADD_BUTTON(MCP1(8), 24); //  - 
 ADD_BUTTON(MCP1(9), 25); //  - 
 ADD_BUTTON(MCP1(10), 26); //  - 
