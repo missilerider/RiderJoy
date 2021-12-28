@@ -83,10 +83,10 @@ uint16_t Control::readAnalog(Input pin) {
 }
 
 uint16_t Control::muxRead(uint8_t id, uint8_t pin) {
-    digitalWrite(AMUX_ADDR_PIN0, pin & 0b1 ? LOW : HIGH);
-    digitalWrite(AMUX_ADDR_PIN1, pin & 0b10 ? LOW : HIGH);
-    digitalWrite(AMUX_ADDR_PIN2, pin & 0b100 ? LOW : HIGH);
-    digitalWrite(AMUX_ADDR_PIN3, pin & 0b1000 ? LOW : HIGH);
+    digitalWrite(AMUX_ADDR_PIN0, pin & 0b1 ? HIGH : LOW);
+    digitalWrite(AMUX_ADDR_PIN1, pin & 0b10 ? HIGH : LOW);
+    digitalWrite(AMUX_ADDR_PIN2, pin & 0b100 ? HIGH : LOW);
+    digitalWrite(AMUX_ADDR_PIN3, pin & 0b1000 ? HIGH : LOW);
 
     switch(id) {
         default:
