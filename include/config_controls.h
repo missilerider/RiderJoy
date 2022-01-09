@@ -1,3 +1,13 @@
+int kk = 0;
+for(kk = 0; kk < 128; kk++) {
+    ADD_BUTTON(PIN(5), kk); //  - 
+    //p(kk); p("/"); pln(freeMemory());
+}
+
+c[1].setMomentary(CONTROL_MOMENTARY_SIMPLE);
+c[2].setMomentary(CONTROL_MOMENTARY_FULL);
+
+/*
 ADD_BUTTON(MCP0(0), 0); //  - 
 ADD_BUTTON(MCP0(1), 1); //  - 
 ADD_BUTTON(MCP0(2), 2); //  - 
@@ -36,6 +46,13 @@ ADD_ROTARY_BUTTONS(PIN(8), PIN(9), 35, 34, 2); //  -
 ADD_POT(A0, AXIS_X);
 ADD_POT(A1, AXIS_Y);
 ADD_POT(A2, AXIS_Z);
+*/
+
+p("MAX kk: ");
+pln(kk);
+p("MEM: ");
+pln(freeMemory());
+
 
 /*
 

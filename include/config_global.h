@@ -2,6 +2,9 @@
 
 #define DEBUG
 
+#define MAX_CONTROLS  128
+#define MAX_ROTARIES  4
+
 // Tiempo de pulsación para las configuraciones momentáneas, en milisegundos
 /** Descripción:
  * Si un botón momentáneo se mantiene pulsado, el botón del joystick permanecerá 
@@ -15,11 +18,15 @@
  * MOMENTARY_MS para rotatorios y otros con cambio rápido, como rotary encoders
  * MOMENTARY_LONG_MS para pulsaciones lentas, como botones o switches
  */
-#define MOMENTARY_MS    50
-#define IDLE_MS         20
+//#define MOMENTARY_MS    50
+#define MOMENTARY_MS    250
+//#define IDLE_MS         20
+#define IDLE_MS         250
 
-#define MOMENTARY_LONG_MS   200
-#define IDLE_LONG_MS        80
+#define MOMENTARY_LONG_MS   250
+//#define MOMENTARY_LONG_MS   200
+#define IDLE_LONG_MS        250
+//#define IDLE_LONG_MS        80
 
 /** Milisegundos a esperar para cancelar la aceleración de un rotary axis
  */
@@ -45,10 +52,10 @@
  * GND      GND
  * 
  */
-#define AMUX_ADDR_PIN0   15
-#define AMUX_ADDR_PIN1   14
-#define AMUX_ADDR_PIN2   16
-#define AMUX_ADDR_PIN3   10
+#define AMUX_ADDR_PIN0   6
+#define AMUX_ADDR_PIN1   7
+#define AMUX_ADDR_PIN2   8
+#define AMUX_ADDR_PIN3   9
 
 #define AMUX_PIN_IN0    A0
 #define AMUX_PIN_IN1    A1

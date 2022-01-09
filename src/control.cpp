@@ -2,9 +2,11 @@
 #include "control.h"
 #include "config_global.h"
 
+#include "button.h"
+
 extern Adafruit_MCP23X17 mcp[8];
 
-void Control::prepare() {
+static void Control::prepare() {
     // Inicializamos los MCP
     for(uint8_t n = 0; n < 8; n++) {
         p("MCP ");
@@ -42,47 +44,50 @@ void Control::prepare() {
 #endif
 }
 
-void Control::setupPullup(Input pin) {
+static void Control::setupPullup(Input pin) {
     switch(GET_PIN_TYPE(pin)) {
         case TYPE_PIN:
             pln(pin);
             pinMode(pin, INPUT_PULLUP);
             break;
 
-        case TYPE_MCP:
+        case TYPE_MCPa:
+        case TYPE_MCPb:
             mcp[MCP_ID(pin)].pinMode(MCP_PIN(pin), INPUT_PULLUP);
             break;
     }
 }
 
-uint8_t Control::readDigital(Input pin) {
+static uint8_t Control::readDigital(Input pin) {
     switch(GET_PIN_TYPE(pin)) {
         case TYPE_PIN:
             return digitalRead(pin);
 
-        case TYPE_MCP:
+        case TYPE_MCPa:
+        case TYPE_MCPb:
             return mcp[MCP_ID(pin)].digitalRead(MCP_PIN(pin));
     }
 
     return 5;
 }
 
-uint16_t Control::readAnalog(Input pin) {
+static uint16_t Control::readAnalog(Input pin) {
     switch(GET_PIN_TYPE(pin)) {
         case TYPE_PIN:
             return analogRead(pin);
 
         case TYPE_AMUX:
-            return this->muxRead(AMUX_ID(pin), AMUX_PIN(pin));
+            return Control::muxRead(AMUX_ID(pin), AMUX_PIN(pin));
 
-        case TYPE_MCP:
+        case TYPE_MCPa:
+        case TYPE_MCPb:
             return mcp[MCP_ID(pin)].digitalRead(MCP_PIN(pin)) == LOW ? 1024 : 0;
     }
 
     return 5;
 }
 
-uint16_t Control::muxRead(uint8_t id, uint8_t pin) {
+static uint16_t Control::muxRead(uint8_t id, uint8_t pin) {
     digitalWrite(AMUX_ADDR_PIN0, pin & 0b1 ? HIGH : LOW);
     digitalWrite(AMUX_ADDR_PIN1, pin & 0b10 ? HIGH : LOW);
     digitalWrite(AMUX_ADDR_PIN2, pin & 0b100 ? HIGH : LOW);
@@ -97,7 +102,7 @@ uint16_t Control::muxRead(uint8_t id, uint8_t pin) {
     }
 }
 
-void Control::setAxis(Joystick_ *j, uint8_t axis, uint16_t value) {
+static void Control::setAxis(Joystick_ *j, uint8_t axis, uint16_t value) {
     switch(axis) {
         case AXIS_X: j->setXAxis(value); break;
         case AXIS_Y: j->setYAxis(value); break;
@@ -107,5 +112,45 @@ void Control::setAxis(Joystick_ *j, uint8_t axis, uint16_t value) {
         case AXIS_RZ: j->setRzAxis(value); break;
         case AXIS_THROTTLE: j->setThrottle(value); break;
         case AXIS_RUDDER: j->setRudder(value); break;
+    }
+}
+
+static uint8_t Control::getHighestJoyButton(ControlData *d) {
+    switch(d->getType()) {
+        case CONTROL_TYPE_BUTTON:
+            return Button::getHighestJoyButton(d);
+        default: return 0;
+    }
+}
+
+static void Control::getAxisRequirements(ControlData *d, uint8_t *axisArray) {
+    switch(d->getType()) {
+//        case CONTROL_TYPE_POT:
+//            return Pot::getAxisRequirements(d, axisArray);
+
+        default: return;
+    }
+}
+
+static void Control::init(ControlData *d) {
+    switch(d->getType()) {
+        case CONTROL_TYPE_BUTTON:
+            return Button::init(d);
+    }
+}
+
+static bool Control::hasPoll(ControlData *d) {
+    switch(d->getType()) {
+        case CONTROL_TYPE_ROTARY_B: return true;
+        default: return false;
+    }
+}
+
+static void Control::process(ControlData *d, Joystick_ *j, uint8_t elapsed) {
+    switch(d->getType()) {
+        case CONTROL_TYPE_BUTTON:
+            return Button::process(d, j, elapsed);
+
+        case CONTROL_TYPE_ROTARY_B: return;
     }
 }

@@ -1,6 +1,9 @@
 #pragma once
 
+#include <Arduino.h>
+
 #include "config_global.h"
+#include "control_macros.h"
 
 #include "debug.h"
 
@@ -29,20 +32,25 @@ class Control {
 public:
     static void prepare();
 
-    virtual void init()=0;
+    virtual void _init()=0;
+    static void init(ControlData *d);
     virtual uint8_t getHighestJoyButton() { return 0; };
+    static uint8_t getHighestJoyButton(ControlData *d);
     virtual void getAxisRequirements(uint8_t *axisArray) {};
+    static void getAxisRequirements(ControlData *d, uint8_t *axisArray);
     
     // Process
     virtual void process(Joystick_ *j)=0;
+    static void process(ControlData *d, Joystick_ *j, uint8_t elapsed);
 
     virtual bool hasPoll() { return false; }
+    static bool hasPoll(ControlData *d);
     virtual void poll() {};
 
 protected:
-    uint8_t readDigital(Input pin);
-    uint16_t readAnalog(Input pin);
-    uint16_t muxRead(uint8_t id, uint8_t pin);
-    void setupPullup(Input pin);
-    void setAxis(Joystick_ *j, uint8_t axis, uint16_t value);
+    static uint8_t readDigital(Input pin);
+    static uint16_t readAnalog(Input pin);
+    static uint16_t muxRead(uint8_t id, uint8_t pin);
+    static void setupPullup(Input pin);
+    static void setAxis(Joystick_ *j, uint8_t axis, uint16_t value);
 };

@@ -3,6 +3,8 @@
 #include "config_global.h"
 #include "debug.h"
 
+#include "control_macros.h"
+
 #include "control.h"
 #include "button.h"
 #include "switch3p.h"
@@ -12,13 +14,14 @@
 #include "pot.h"
 
 #include <Joystick.h>
+#include <MemoryFree.h>
 
 #include "config_macros.h"
 
 #define UPDATEMILLIS 10 // Milisegundos entre actualizaciones de USB
 
-Control *ctrl[128];
-Control *pollCtrl[128];
+ControlData ctrl[MAX_CONTROLS];
+Control *pollCtrl[MAX_ROTARIES];
 uint8_t numC, numPoll;
 
 Joystick_ *joy;
@@ -37,6 +40,23 @@ void setup() {
   pln("");
   pln("RiderIndustries HOTAS init...");
 
+  pln("TEST..................");
+
+  ControlData d;
+  d.specs = 0xFF;
+  pbitln(d.getStage());
+  d.setStage0();
+  pbitln(d.getStage());
+  d.setStage1();
+  pbitln(d.getStage());
+  d.setStage2();
+  pbitln(d.getStage());
+  d.setStage3();
+  pbitln(d.getStage());
+  d.setStage0();
+  pbitln(d.getStage());
+
+  pln("TEST..................");
 
   Control::prepare();
 
@@ -47,14 +67,22 @@ void setup() {
   memset(axis, 0, sizeof(uint8_t)*11);
 
   for(n=0; n < numC; n++) {
-    k = ctrl[n]->getHighestJoyButton();
+    k = Control::getHighestJoyButton(&ctrl[n]);
     if(k > buttons) buttons = k;
 
-    ctrl[n]->getAxisRequirements(axis);
+    Control::getAxisRequirements(&ctrl[n], axis);
   }
 
   p("Botones: ");
   pln(buttons);
+
+  p("Axis: ");
+  p(axis[AXIS_X]>0 ? 1 : 0);
+  p(axis[AXIS_Y]>0 ? 1 : 0);
+  p(axis[AXIS_Z]>0 ? 1 : 0);
+  p(axis[AXIS_RX]>0 ? 1 : 0);
+  p(axis[AXIS_RY]>0 ? 1 : 0);
+  pln(axis[AXIS_RZ]>0 ? 1 : 0);
 
   joy = new Joystick_(JOYSTICK_DEFAULT_REPORT_ID, 
     JOYSTICK_TYPE_GAMEPAD, 
@@ -64,14 +92,6 @@ void setup() {
     axis[AXIS_X]>0, axis[AXIS_Y]>0, axis[AXIS_Z]>0, 
     axis[AXIS_RX]>0, axis[AXIS_RY]>0, axis[AXIS_RZ]>0, 
     axis[AXIS_RUDDER]>0, axis[AXIS_THROTTLE]>0, false, false, false); //axis[AXIS_RUDDER]>0, axis[AXIS_THROTTLE]>0, axis[AXIS_ACCEL]>0, axis[AXIS_BRAKE]>0, axis[AXIS_STEERING]>0);
-
-  p("Axis: ");
-  p(axis[AXIS_X]>0 ? 1 : 0);
-  p(axis[AXIS_Y]>0 ? 1 : 0);
-  p(axis[AXIS_Z]>0 ? 1 : 0);
-  p(axis[AXIS_RX]>0 ? 1 : 0);
-  p(axis[AXIS_RY]>0 ? 1 : 0);
-  pln(axis[AXIS_RZ]>0 ? 1 : 0);
 
   joy->begin(false); // autoSendMode = false
 
@@ -90,10 +110,11 @@ void setup() {
 
   k = 0;
   for(n = 0; n < numC; n++) {
-    ctrl[n]->init();
-    if(ctrl[n]->hasPoll()) {
-      pollCtrl[k++] = ctrl[n];
-    }
+    //ctrl[n]->init();
+    Control::init(&ctrl[n]);
+//    if(Control::hasPoll(ctrl[n])) {
+//      pollCtrl[k++] = ctrl[n];
+//    }
   }
 
   numPoll = k;
@@ -115,7 +136,8 @@ void loop() {
 
   // Procesa todos los controles
   for(n = 0; n < numC; n++) {
-    ctrl[n]->process(joy);
+    Control::process(&ctrl[n], joy, (uint8_t)(now - lastUpdate));
+    //ctrl[n]->process(joy);
   }
 
   // Actualiza el joystick
