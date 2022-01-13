@@ -137,7 +137,13 @@ void loop() {
   // Procesa todos los controles
   for(n = 0; n < numC; n++) {
     Control::process(&ctrl[n], joy, (uint8_t)(now - lastUpdate));
-    //ctrl[n]->process(joy);
+
+  if(numC % LOOP_REPOLLING == 0) {
+    // Polling a to meter
+    for(n = 0; n < numPoll; n++) {
+      pollCtrl[n]->poll();
+    }
+  }
   }
 
   // Actualiza el joystick
