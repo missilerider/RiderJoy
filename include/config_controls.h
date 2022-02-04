@@ -29,6 +29,7 @@ ADD_BUTTON(MCP1(10), 26); //  -
 ADD_BUTTON(MCP1(11), 27); //  - 
 ADD_BUTTON(MCP1(12), 28); //  - 
 ADD_BUTTON(MCP1(13), 29); //  - 
+
 ADD_ROTARY_BUTTONS(PIN(6), PIN(7), 33, 32, 2); //  - 
 ADD_ROTARY_BUTTONS(PIN(8), PIN(9), 35, 34, 2); //  - 
 ADD_POT(A0, AXIS_X);
@@ -37,6 +38,11 @@ ADD_POT(A2, AXIS_Z);
 
 ADD_SWITCH3(MCP1(14), MCP1(15), 30, 31, 40)->momentary();
 ADD_SWITCH3(PIN(5), PIN(4), 37, 38, 39)->momentary();
+
+ADD_BUTTON(MCP2(8), 41); //  - 
+ADD_BUTTON(MCP2(9), 42); //  - 
+ADD_BUTTON(MCP2(10), 43); //  - 
+ADD_SWITCH2(MCP2(11), 44, 45)->momentary(); //  - 
 
 /*
 
