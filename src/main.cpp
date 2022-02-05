@@ -30,7 +30,7 @@ Adafruit_MCP23X17 mcp[8];
 unsigned long now;
 unsigned long lastUpdate = 0;
 
-uint8_t n;
+uint8_t n, m;
 
 void setup() {
 #ifdef DEBUG
@@ -121,6 +121,31 @@ void setup() {
 
   p("Numpoll: ");
   pln(numPoll);
+
+#ifdef ENABLE_FN_NUMPAD
+/*
+  1: 2+3
+  2: 2+1
+  3: 2+5
+  4: 7+3
+  5: 7+1
+  6: 7+5
+  7: 6+3
+  8: 6+1
+  9: 6+5
+  *: 4+3
+  0: 4+1
+  #: 4+5
+*/
+  Control::setupPullup(FN_NUMPAD_PIN0);
+  Control::setupPullup(FN_NUMPAD_PIN2);
+  Control::setupPullup(FN_NUMPAD_PIN4);
+
+  Control::setupOutput(FN_NUMPAD_PIN1);
+  Control::setupOutput(FN_NUMPAD_PIN3);
+  Control::setupOutput(FN_NUMPAD_PIN5);
+  Control::setupOutput(FN_NUMPAD_PIN6);
+#endif
 }
 
 void loop() {
@@ -138,15 +163,81 @@ void loop() {
   for(n = 0; n < numC; n++) {
     Control::process(&ctrl[n], joy, (uint8_t)(now - lastUpdate));
 
-  if(numC % LOOP_REPOLLING == 0) {
-    // Polling a to meter
-    for(n = 0; n < numPoll; n++) {
-      pollCtrl[n]->poll();
+    for(m = 0; m < numPoll; m++) {
+      pollCtrl[m]->poll();
     }
-  }
   }
 
   // Actualiza el joystick
   joy->sendState();
+
+  // Si esta configurado, lee el bloque numerico y pulsa las teclas de función
+  #ifdef ENABLE_FN_NUMPAD
+    Control::setupInput(FN_NUMPAD_PIN3);
+    Control::setupInput(FN_NUMPAD_PIN5);
+    Control::setupInput(FN_NUMPAD_PIN6);
+
+    Control::setupOutput(FN_NUMPAD_PIN1);
+    Control::setOutput(FN_NUMPAD_PIN1, LOW);
+    if(Control::readDigital(FN_NUMPAD_PIN2)) {
+      // F1
+    }
+
+    if(Control::readDigital(FN_NUMPAD_PIN0)) {
+      // F2
+    }
+
+    if(Control::readDigital(FN_NUMPAD_PIN4)) {
+      // F3
+    }
+    Control::setupInput(FN_NUMPAD_PIN1);
+
+    Control::setupOutput(FN_NUMPAD_PIN6);
+    Control::setOutput(FN_NUMPAD_PIN6, LOW);
+    if(Control::readDigital(FN_NUMPAD_PIN2)) {
+      // F4
+    }
+
+    if(Control::readDigital(FN_NUMPAD_PIN0)) {
+      // F5
+    }
+
+    if(Control::readDigital(FN_NUMPAD_PIN4)) {
+      // F6
+    }
+    Control::setupInput(FN_NUMPAD_PIN6);
+
+    Control::setupOutput(FN_NUMPAD_PIN5);
+    Control::setOutput(FN_NUMPAD_PIN5, LOW);
+    if(Control::readDigital(FN_NUMPAD_PIN2)) {
+      // F7
+    }
+
+    if(Control::readDigital(FN_NUMPAD_PIN0)) {
+      // F8
+    }
+
+    if(Control::readDigital(FN_NUMPAD_PIN4)) {
+      // F9
+    }
+    Control::setupInput(FN_NUMPAD_PIN5);
+
+    Control::setupOutput(FN_NUMPAD_PIN3);
+    Control::setOutput(FN_NUMPAD_PIN3, LOW);
+    if(Control::readDigital(FN_NUMPAD_PIN2)) {
+      // F11
+    }
+
+    if(Control::readDigital(FN_NUMPAD_PIN0)) {
+      // F10
+    }
+
+    if(Control::readDigital(FN_NUMPAD_PIN4)) {
+      // F12
+    }
+    Control::setupInput(FN_NUMPAD_PIN3);
+
+  #endif
+
   lastUpdate = now;
 }

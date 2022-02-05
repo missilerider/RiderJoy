@@ -31,6 +31,9 @@
 class Control {
 public:
     static void prepare();
+    static void setupPullup(Input pin);
+    static void setupOutput(Input pin);
+    static void setupInput(Input pin);
 
     virtual void _init()=0;
     static void init(ControlData *d);
@@ -47,10 +50,11 @@ public:
     static bool hasPoll(ControlData *d);
     virtual void poll() {};
 
+    static void setOutput(Input pin, uint8_t value);
+
 protected:
     static uint8_t readDigital(Input pin);
     static uint16_t readAnalog(Input pin);
     static uint16_t muxRead(uint8_t id, uint8_t pin);
-    static void setupPullup(Input pin);
     static void setAxis(Joystick_ *j, uint8_t axis, uint16_t value);
 };

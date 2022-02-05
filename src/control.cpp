@@ -58,6 +58,44 @@ static void Control::setupPullup(Input pin) {
     }
 }
 
+static void Control::setupOutput(Input pin) {
+    switch(GET_PIN_TYPE(pin)) {
+        case TYPE_PIN:
+            pln(pin);
+            pinMode(pin, OUTPUT);
+            break;
+
+        case TYPE_MCPa:
+        case TYPE_MCPb:
+            mcp[MCP_ID(pin)].pinMode(MCP_PIN(pin), OUTPUT);
+            break;
+    }
+}
+
+static void Control::setupInput(Input pin) {
+    switch(GET_PIN_TYPE(pin)) {
+        case TYPE_PIN:
+            pinMode(pin, INPUT);
+            break;
+
+        case TYPE_MCPa:
+        case TYPE_MCPb:
+            mcp[MCP_ID(pin)].pinMode(MCP_PIN(pin), INPUT);
+            break;
+    }
+}
+
+static void Control::setOutput(Input pin, uint8_t value) {
+    switch(GET_PIN_TYPE(pin)) {
+        case TYPE_PIN:
+            return digitalWrite(pin, value);
+
+        case TYPE_MCPa:
+        case TYPE_MCPb:
+            return mcp[MCP_ID(pin)].digitalWrite(MCP_PIN(pin), value);
+    }
+}
+
 static uint8_t Control::readDigital(Input pin) {
     switch(GET_PIN_TYPE(pin)) {
         case TYPE_PIN:

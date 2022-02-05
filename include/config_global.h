@@ -5,8 +5,6 @@
 #define MAX_CONTROLS  128
 #define MAX_ROTARIES  4
 
-#define LOOP_REPOLLING  5
-
 // Tiempo de pulsación para las configuraciones momentáneas, en milisegundos
 /** Descripción:
  * Si un botón momentáneo se mantiene pulsado, el botón del joystick permanecerá 
@@ -71,3 +69,5 @@
  * Si se deja a 0, todos los cambios de lectura se registrarán como movimientos del eje
  */
 #define POT_ERROR       1
+
+

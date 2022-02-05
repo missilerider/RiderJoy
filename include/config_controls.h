@@ -1,3 +1,16 @@
+#define ENABLE_FN_NUMPAD
+#ifdef ENABLE_FN_NUMPAD
+    #define FN_NUMPAD_PIN0 MCP0(0)
+    #define FN_NUMPAD_PIN1 MCP0(0)
+    #define FN_NUMPAD_PIN2 MCP0(0)
+    #define FN_NUMPAD_PIN3 MCP0(0)
+    #define FN_NUMPAD_PIN4 MCP0(0)
+    #define FN_NUMPAD_PIN5 MCP0(0)
+    #define FN_NUMPAD_PIN6 MCP0(0)
+    //, MCP0(0), MCP0(0), MCP0(0), MCP0(0), MCP0(0), MCP0(0), MCP0(0)]
+#endif
+
+
 int kk = 0;
 for(kk = 0; kk < 128; kk++) {
     ADD_BUTTON(PIN(5), kk); //  - 
