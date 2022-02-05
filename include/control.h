@@ -51,8 +51,6 @@ public:
     virtual void poll() {};
 
     static void setOutput(Input pin, uint8_t value);
-
-protected:
     static uint8_t readDigital(Input pin);
     static uint16_t readAnalog(Input pin);
     static uint16_t muxRead(uint8_t id, uint8_t pin);

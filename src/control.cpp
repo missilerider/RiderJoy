@@ -6,7 +6,7 @@
 
 extern Adafruit_MCP23X17 mcp[8];
 
-static void Control::prepare() {
+void Control::prepare() {
     // Inicializamos los MCP
     for(uint8_t n = 0; n < 8; n++) {
         p("MCP ");
@@ -44,10 +44,9 @@ static void Control::prepare() {
 #endif
 }
 
-static void Control::setupPullup(Input pin) {
+void Control::setupPullup(Input pin) {
     switch(GET_PIN_TYPE(pin)) {
         case TYPE_PIN:
-            pln(pin);
             pinMode(pin, INPUT_PULLUP);
             break;
 
@@ -58,10 +57,9 @@ static void Control::setupPullup(Input pin) {
     }
 }
 
-static void Control::setupOutput(Input pin) {
+void Control::setupOutput(Input pin) {
     switch(GET_PIN_TYPE(pin)) {
         case TYPE_PIN:
-            pln(pin);
             pinMode(pin, OUTPUT);
             break;
 
@@ -72,7 +70,7 @@ static void Control::setupOutput(Input pin) {
     }
 }
 
-static void Control::setupInput(Input pin) {
+void Control::setupInput(Input pin) {
     switch(GET_PIN_TYPE(pin)) {
         case TYPE_PIN:
             pinMode(pin, INPUT);
@@ -85,7 +83,7 @@ static void Control::setupInput(Input pin) {
     }
 }
 
-static void Control::setOutput(Input pin, uint8_t value) {
+void Control::setOutput(Input pin, uint8_t value) {
     switch(GET_PIN_TYPE(pin)) {
         case TYPE_PIN:
             return digitalWrite(pin, value);
@@ -96,7 +94,7 @@ static void Control::setOutput(Input pin, uint8_t value) {
     }
 }
 
-static uint8_t Control::readDigital(Input pin) {
+uint8_t Control::readDigital(Input pin) {
     switch(GET_PIN_TYPE(pin)) {
         case TYPE_PIN:
             return digitalRead(pin);
@@ -109,7 +107,7 @@ static uint8_t Control::readDigital(Input pin) {
     return 5;
 }
 
-static uint16_t Control::readAnalog(Input pin) {
+uint16_t Control::readAnalog(Input pin) {
     switch(GET_PIN_TYPE(pin)) {
         case TYPE_PIN:
             return analogRead(pin);
@@ -125,7 +123,7 @@ static uint16_t Control::readAnalog(Input pin) {
     return 5;
 }
 
-static uint16_t Control::muxRead(uint8_t id, uint8_t pin) {
+uint16_t Control::muxRead(uint8_t id, uint8_t pin) {
     digitalWrite(AMUX_ADDR_PIN0, pin & 0b1 ? HIGH : LOW);
     digitalWrite(AMUX_ADDR_PIN1, pin & 0b10 ? HIGH : LOW);
     digitalWrite(AMUX_ADDR_PIN2, pin & 0b100 ? HIGH : LOW);
@@ -140,7 +138,7 @@ static uint16_t Control::muxRead(uint8_t id, uint8_t pin) {
     }
 }
 
-static void Control::setAxis(Joystick_ *j, uint8_t axis, uint16_t value) {
+void Control::setAxis(Joystick_ *j, uint8_t axis, uint16_t value) {
     switch(axis) {
         case AXIS_X: j->setXAxis(value); break;
         case AXIS_Y: j->setYAxis(value); break;
@@ -153,7 +151,7 @@ static void Control::setAxis(Joystick_ *j, uint8_t axis, uint16_t value) {
     }
 }
 
-static uint8_t Control::getHighestJoyButton(ControlData *d) {
+uint8_t Control::getHighestJoyButton(ControlData *d) {
     switch(d->getType()) {
         case CONTROL_TYPE_BUTTON:
             return Button::getHighestJoyButton(d);
@@ -161,7 +159,7 @@ static uint8_t Control::getHighestJoyButton(ControlData *d) {
     }
 }
 
-static void Control::getAxisRequirements(ControlData *d, uint8_t *axisArray) {
+void Control::getAxisRequirements(ControlData *d, uint8_t *axisArray) {
     switch(d->getType()) {
 //        case CONTROL_TYPE_POT:
 //            return Pot::getAxisRequirements(d, axisArray);
@@ -170,21 +168,21 @@ static void Control::getAxisRequirements(ControlData *d, uint8_t *axisArray) {
     }
 }
 
-static void Control::init(ControlData *d) {
+void Control::init(ControlData *d) {
     switch(d->getType()) {
         case CONTROL_TYPE_BUTTON:
             return Button::init(d);
     }
 }
 
-static bool Control::hasPoll(ControlData *d) {
+bool Control::hasPoll(ControlData *d) {
     switch(d->getType()) {
         case CONTROL_TYPE_ROTARY_B: return true;
         default: return false;
     }
 }
 
-static void Control::process(ControlData *d, Joystick_ *j, uint8_t elapsed) {
+void Control::process(ControlData *d, Joystick_ *j, uint8_t elapsed) {
     switch(d->getType()) {
         case CONTROL_TYPE_BUTTON:
             return Button::process(d, j, elapsed);

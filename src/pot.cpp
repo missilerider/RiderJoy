@@ -39,7 +39,7 @@ void Pot::process(Joystick_ *j) {
         (this->lastValue < 1023 && v == 1023)) {
 
         this->lastValue = v;
-        pln(this->clamp(this->lastValue));
+        //pln(this->clamp(this->lastValue));
 
         if(this->inverted) {
             this->setAxis(

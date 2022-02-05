@@ -16,7 +16,7 @@ uint8_t Button::getHighestJoyButton() {
     return this->jButton;
 }
 
-static uint8_t Button::getHighestJoyButton(ControlData *d) {
+uint8_t Button::getHighestJoyButton(ControlData *d) {
     return d->button[0];
 }
 
@@ -48,7 +48,7 @@ void Button::init() {
     pln(this->jButton);
 }
 
-static void Button::init(ControlData *d) {
+void Button::init(ControlData *d) {
     Control::setupPullup(d->pin[0]);
 //    p(d->pin[0]);
 //    p("=>");
@@ -71,7 +71,7 @@ void Button::process(Joystick_ *j) {
     }
 }
 
-static void Button::process(ControlData *d, Joystick_ *j, uint8_t elapsed) {
+void Button::process(ControlData *d, Joystick_ *j, uint8_t elapsed) {
     switch(d->getMomentary()) {
         case CONTROL_MOMENTARY_NO:
             j->setButton(

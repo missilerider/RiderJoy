@@ -113,19 +113,19 @@ public:
         return this->specs & CTRL_MOMENTARY_STAGE3;
     }
 
-    uint8_t setStage0() {
+    void setStage0() {
         this->specs = (this->specs & CTRL_MOMENTARY_STAGEMASK);
     }
 
-    uint8_t setStage1() {
+    void setStage1() {
         this->specs = (this->specs & CTRL_MOMENTARY_STAGEMASK) | CTRL_MOMENTARY_STAGE1;
     }
 
-    uint8_t setStage2() {
+    void setStage2() {
         this->specs = (this->specs & CTRL_MOMENTARY_STAGEMASK) | CTRL_MOMENTARY_STAGE2;
     }
 
-    uint8_t setStage3() {
+    void setStage3() {
         this->specs |= CTRL_MOMENTARY_STAGE3;
     }
 
