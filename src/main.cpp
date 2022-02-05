@@ -27,7 +27,7 @@ Adafruit_MCP23X17 mcp[8];
 unsigned long now;
 unsigned long lastUpdate = 0;
 
-uint8_t n;
+uint8_t n, m;
 
 void setup() {
 #ifdef DEBUG
@@ -116,6 +116,10 @@ void loop() {
   // Procesa todos los controles
   for(n = 0; n < numC; n++) {
     ctrl[n]->process(joy);
+
+    for(m = 0; m < numPoll; m++) {
+      pollCtrl[m]->poll();
+    }
   }
 
   // Actualiza el joystick
