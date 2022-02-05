@@ -12,6 +12,7 @@
 #include "pot.h"
 
 #include <Joystick.h>
+#include "HID-Project.h"
 
 #include "config_macros.h"
 
@@ -23,6 +24,9 @@ uint8_t numC, numPoll;
 
 Joystick_ *joy;
 Adafruit_MCP23X17 mcp[8];
+
+uint8_t rawhidData[120];
+uint8_t featureData[64];
 
 unsigned long now;
 unsigned long lastUpdate = 0;
@@ -55,6 +59,11 @@ void setup() {
 
   p("Botones: ");
   pln(buttons);
+
+  RawHID.begin(rawhidData, sizeof(rawhidData));
+  // Let the feature report data directly point at the led array
+  RawHID.setFeatureReport(featureData, sizeof(featureData));
+  RawHID.enableFeatureReport();
 
   joy = new Joystick_(JOYSTICK_DEFAULT_REPORT_ID, 
     JOYSTICK_TYPE_GAMEPAD, 
@@ -108,6 +117,15 @@ void loop() {
   // Polling a to meter
   for(n = 0; n < numPoll; n++) {
     pollCtrl[n]->poll();
+  }
+
+  auto bytesAvailable = RawHID.available();
+  if (bytesAvailable) {
+      // Mirror data via Serial
+      while (bytesAvailable--) {
+          Serial1.print(RawHID.read()); Serial1.print(',');
+      }
+      Serial1.println();
   }
 
   // Si no es momento de actualizar, salimos

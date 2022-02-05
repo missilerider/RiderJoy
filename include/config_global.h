@@ -45,10 +45,10 @@
  * GND      GND
  * 
  */
-#define AMUX_ADDR_PIN0   15
-#define AMUX_ADDR_PIN1   14
-#define AMUX_ADDR_PIN2   16
-#define AMUX_ADDR_PIN3   10
+#define AMUX_ADDR_PIN0   9
+#define AMUX_ADDR_PIN1   8
+#define AMUX_ADDR_PIN2   7
+#define AMUX_ADDR_PIN3   6
 
 #define AMUX_PIN_IN0    A0
 #define AMUX_PIN_IN1    A1
