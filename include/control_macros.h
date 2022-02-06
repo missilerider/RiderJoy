@@ -24,12 +24,13 @@ union ControlData {
 };*/
 
 // bits 0-2
-#define CTRLMASK_TYPE           0b111
-#define CONTROL_TYPE_BUTTON     0b000
-#define CONTROL_TYPE_SWITCH3    0b001
-#define CONTROL_TYPE_SWITCH2    0b010
-#define CONTROL_TYPE_POT        0b011
-#define CONTROL_TYPE_ROTARY_B   0b100
+#define CTRLMASK_TYPE               0b111
+#define CONTROL_TYPE_BUTTON         0b000
+#define CONTROL_TYPE_SWITCH3        0b001
+#define CONTROL_TYPE_SWITCH2        0b010
+#define CONTROL_TYPE_POT            0b011
+#define CONTROL_TYPE_ROTARY_B       0b100
+#define CONTROL_TYPE_ROTARY_AXIS    0b101
 
 // bits 3-4
 #define CTRLMASK_MOMENTARY          0b11000
@@ -37,12 +38,15 @@ union ControlData {
 #define CONTROL_MOMENTARY_SIMPLE    0b01000
 #define CONTROL_MOMENTARY_FULL      0b10000
 
-// bit 5
+// bit 5-6
 #define CTRL_MOMENTARY_STAGE0   0b0000000
 #define CTRL_MOMENTARY_STAGE1   0b0100000
 #define CTRL_MOMENTARY_STAGE2   0b1000000
 #define CTRL_MOMENTARY_STAGE3   0b1100000
 #define CTRL_MOMENTARY_STAGEMASK    0b10011111
+
+// bit 7
+#define CTRL_INVERTED           0b10000000
 
 class ControlData {
 public:
@@ -59,7 +63,7 @@ public:
         this->timeout = 0;
     }
 
-    void setup(uint8_t type, uint8_t i1, uint8_t b1) {
+    ControlData *setup(uint8_t type, uint8_t i1, uint8_t b1) {
         this->button[0] = b1;
         this->button[1] = this->button[2] = 0;
         this->specs = 0;
@@ -68,9 +72,11 @@ public:
         this->timeout = 0;
 
         this->setType(type);
+
+        return this;
     }
 
-    void setup(uint8_t type, uint8_t i1, uint8_t b1, uint8_t i2) {
+    ControlData *setup(uint8_t type, uint8_t i1, uint8_t b1, uint8_t i2) {
         this->button[0] = b1;
         this->button[1] = this->button[2] = 0;
         this->specs = 0;
@@ -79,9 +85,11 @@ public:
         this->timeout = 0;
 
         this->setType(type);
+
+        return this;
     }
 
-    void setup(uint8_t type, uint8_t i1, uint8_t i2, uint8_t b1, uint8_t b2, uint8_t b3) {
+    ControlData *setup(uint8_t type, uint8_t i1, uint8_t i2, uint8_t b1, uint8_t b2, uint8_t b3) {
         this->button[0] = b1;
         this->button[1] = b2;
         this->button[2] = b3;
@@ -91,6 +99,8 @@ public:
         this->timeout = 0;
 
         this->setType(type);
+     
+        return this;
     }
 
     void setMomentary(uint8_t momentary) {
@@ -139,6 +149,11 @@ public:
 
         this->timeout -= elapsed;
         return -1; // Timeout suficiente todavía
+    }
+
+    // Funciones de parametrización
+    ControlData *i() {
+        this->specs ^= momentary;
     }
 };
 
