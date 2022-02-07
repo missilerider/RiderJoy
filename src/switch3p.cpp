@@ -20,6 +20,16 @@ uint8_t Switch3p::getHighestJoyButton() {
     return max;
 }
 
+uint8_t Switch3p::getHighestJoyButton(ControlData *d) {
+    uint8_t max = d->button[0];
+
+    if(d->button[1] > max) max = d->button[1];
+
+    if(d->button[2] > max) max = d->button[2];
+
+    return max;
+}
+
 Switch3p *Switch3p::momentary() {
     this->timer = new Timer(MOMENTARY_LONG_MS);
     return this;
@@ -35,6 +45,11 @@ Switch3p *Switch3p::i() {
 void Switch3p::init() {
     this->setupPullup(i1);
     this->setupPullup(i2);
+}
+
+void Switch3p::init(ControlData *d) {
+    Control::setupPullup(d->pin[0]);
+    Control::setupPullup(d->pin[1]);
 }
 
 void Switch3p::process(Joystick_ *j) {
@@ -96,5 +111,108 @@ void Switch3p::process(Joystick_ *j) {
                 j->setButton(this->j3, this->timer->isPushed() ? 1 : 0);
                 break;
         }
+    }
+}
+
+void Switch3p::process(ControlData *d, Joystick_ *j, uint8_t elapsed) {
+    uint8_t pin1 = Control::readDigital(d->pin[0]);
+    uint8_t pin2 = Control::readDigital(d->pin[1]);
+    uint8_t status;
+    if(pin1 == LOW) status = 1; // Pos 1
+    else if(pin2 == LOW) status = 3; // Pos 3
+    else status = 2; // Pos central
+    uint8_t stage = d->getStage();
+
+    switch(d->getMomentary()) {
+        case CONTROL_MOMENTARY_NO:
+            j->setButton(d->button[0], status == 1 ? 1 : 0);
+            j->setButton(d->button[1], status == 2 ? 1 : 0);
+            j->setButton(d->button[2], status == 3 ? 1 : 0);
+            break;
+
+        case CONTROL_MOMENTARY_SIMPLE:
+            // Stage 1-3 == status 1 a 3 en pulsación
+            // Stage 4-6 == status 1 a 3 en idle
+
+            // Si hay cambio de estado
+            if((status == 1 && stage != CTRL_MOMENTARY_STAGE1) || 
+                (status == 2 && stage != CTRL_MOMENTARY_STAGE2) || 
+                (status == 3 && stage != CTRL_MOMENTARY_STAGE3)) {
+
+                d->timeout = MOMENTARY_LONG_MS;
+
+                switch(status) {
+                    case 1: d->setStage1(); break;
+                    case 2: d->setStage2(); break;
+                    case 3: d->setStage3(); break;
+                }
+
+                j->setButton(d->button[0], status == 1 ? 1 : 0);
+                j->setButton(d->button[1], status == 2 ? 1 : 0);
+                j->setButton(d->button[2], status == 3 ? 1 : 0);
+
+            } else {
+                // Estado no cambiado. Tempus fugit
+                if(d->loop(elapsed)) {
+                    // Timeout no cumplido
+                    j->setButton(d->button[0], status == 1 ? 1 : 0);
+                    j->setButton(d->button[1], status == 2 ? 1 : 0);
+                    j->setButton(d->button[2], status == 3 ? 1 : 0);
+                } else { // Timeout expirado
+                    j->setButton(d->button[0], 0);
+                    j->setButton(d->button[1], 0);
+                    j->setButton(d->button[2], 0);
+                }
+            }
+
+            break;
+
+        case CONTROL_MOMENTARY_FULL:
+            // Stage 1-3 == status 1 a 3 en pulsación
+            // Stage 4-6 == status 1 a 3 en idle
+            if(stage >= CTRL_MOMENTARY_STAGE4) { // Fase Idle
+                if(d->loop(elapsed)) {
+                    // Timeout en marcha (haciendo idle)
+                    j->setButton(d->button[0], 0);
+                    j->setButton(d->button[1], 0);
+                    j->setButton(d->button[2], 0);
+                } else {
+                    // Timeout idle expirado. Cambiamos de valor si debe
+                    if((status == 1 && stage != CTRL_MOMENTARY_STAGE4) || 
+                        (status == 2 && stage != CTRL_MOMENTARY_STAGE5) || 
+                        (status == 3 && stage != CTRL_MOMENTARY_STAGE6)) {
+                            // Estamos en estado distinto del anterior. Empezamos nueva pulsación en posición actual
+                            switch(status) {
+                                case 1: d->setStage1(); break;
+                                case 2: d->setStage2(); break;
+                                case 3: d->setStage3(); break;
+                            }
+
+                            d->timeout = MOMENTARY_LONG_MS; // Empezamos a contar la pulsacion desde cero
+                        }
+                }
+            } else {
+                // Pulsacion
+                if(d->loop(elapsed)) {
+                    j->setButton(d->button[0], stage == CTRL_MOMENTARY_STAGE1 ? 1 : 0);
+                    j->setButton(d->button[1], stage == CTRL_MOMENTARY_STAGE2 ? 1 : 0);
+                    j->setButton(d->button[2], stage == CTRL_MOMENTARY_STAGE3 ? 1 : 0);
+                } else {
+                    // Pulsación recién terminada. Vamos a idle
+                    j->setButton(d->button[0], 0);
+                    j->setButton(d->button[1], 0);
+                    j->setButton(d->button[2], 0);
+
+                    switch(stage) { // Iniciamos idle de la posición en la que estábamos
+                        default:
+                        case CTRL_MOMENTARY_STAGE1: d->setStage4(); break;
+                        case CTRL_MOMENTARY_STAGE2: d->setStage5(); break;
+                        case CTRL_MOMENTARY_STAGE3: d->setStage6(); break;
+                    }
+
+                    d->timeout = IDLE_LONG_MS;
+                }
+            }
+            break;
     }
 }

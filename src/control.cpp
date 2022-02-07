@@ -3,6 +3,10 @@
 #include "config_global.h"
 
 #include "button.h"
+#include "switch3p.h"
+#include "switch2p.h"
+#include "pot.h"
+#include "rotaryButton.h"
 
 extern Adafruit_MCP23X17 mcp[8];
 
@@ -155,14 +159,24 @@ uint8_t Control::getHighestJoyButton(ControlData *d) {
     switch(d->getType()) {
         case CONTROL_TYPE_BUTTON:
             return Button::getHighestJoyButton(d);
+
+        case CONTROL_TYPE_SWITCH3:
+            return Switch3p::getHighestJoyButton(d);
+
+        case CONTROL_TYPE_SWITCH2:
+            return Switch2p::getHighestJoyButton(d);
+
+        case CONTROL_TYPE_ROTARY_B:
+            return RotaryButton::getHighestJoyButton(d);
+
         default: return 0;
     }
 }
 
 void Control::getAxisRequirements(ControlData *d, uint8_t *axisArray) {
     switch(d->getType()) {
-//        case CONTROL_TYPE_POT:
-//            return Pot::getAxisRequirements(d, axisArray);
+        case CONTROL_TYPE_POT:
+            return Pot::getAxisRequirements(d, axisArray);
 
         default: return;
     }
@@ -172,6 +186,18 @@ void Control::init(ControlData *d) {
     switch(d->getType()) {
         case CONTROL_TYPE_BUTTON:
             return Button::init(d);
+
+        case CONTROL_TYPE_SWITCH3:
+            return Switch3p::init(d);
+
+        case CONTROL_TYPE_SWITCH2:
+            return Switch2p::init(d);
+
+        case CONTROL_TYPE_POT:
+            return Pot::init(d);
+
+        case CONTROL_TYPE_ROTARY_B:
+            return RotaryButton::init(d);
     }
 }
 
@@ -187,6 +213,16 @@ void Control::process(ControlData *d, Joystick_ *j, uint8_t elapsed) {
         case CONTROL_TYPE_BUTTON:
             return Button::process(d, j, elapsed);
 
-        case CONTROL_TYPE_ROTARY_B: return;
+        case CONTROL_TYPE_SWITCH3:
+            return Switch3p::process(d, j, elapsed);
+
+        case CONTROL_TYPE_SWITCH2:
+            return Switch2p::process(d, j, elapsed);
+
+        case CONTROL_TYPE_POT:
+            return Pot::process(d, j, elapsed);
+
+        case CONTROL_TYPE_ROTARY_B:
+            return RotaryButton::process(d, j, elapsed);
     }
 }

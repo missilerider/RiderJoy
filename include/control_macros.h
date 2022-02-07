@@ -39,14 +39,15 @@ union ControlData {
 #define CONTROL_MOMENTARY_FULL      0b10000
 
 // bit 5-6
-#define CTRL_MOMENTARY_STAGE0   0b0000000
-#define CTRL_MOMENTARY_STAGE1   0b0100000
-#define CTRL_MOMENTARY_STAGE2   0b1000000
-#define CTRL_MOMENTARY_STAGE3   0b1100000
-#define CTRL_MOMENTARY_STAGEMASK    0b10011111
-
-// bit 7
-#define CTRL_INVERTED           0b10000000
+#define CTRL_MOMENTARY_STAGE0   0b00000000
+#define CTRL_MOMENTARY_STAGE1   0b00100000
+#define CTRL_MOMENTARY_STAGE2   0b01000000
+#define CTRL_MOMENTARY_STAGE3   0b01100000
+#define CTRL_MOMENTARY_STAGE4   0b10000000
+#define CTRL_MOMENTARY_STAGE5   0b10100000
+#define CTRL_MOMENTARY_STAGE6   0b11000000
+#define CTRL_MOMENTARY_STAGE7   0b11100000
+#define CTRL_MOMENTARY_STAGEMASK    0b00011111
 
 class ControlData {
 public:
@@ -76,12 +77,13 @@ public:
         return this;
     }
 
-    ControlData *setup(uint8_t type, uint8_t i1, uint8_t b1, uint8_t i2) {
+    ControlData *setup(uint8_t type, uint8_t i1, uint8_t b1, uint8_t b2) {
         this->button[0] = b1;
-        this->button[1] = this->button[2] = 0;
+        this->button[1] = b2;
+        this->button[2] = 0;
         this->specs = 0;
         this->pin[0] = i1;
-        this->pin[1] = i2;
+        this->pin[1] = 0;
         this->timeout = 0;
 
         this->setType(type);
@@ -103,8 +105,18 @@ public:
         return this;
     }
 
-    void setMomentary(uint8_t momentary) {
-        this->specs |= momentary;
+    ControlData *momentary() {
+        this->setMomentary(CONTROL_MOMENTARY_SIMPLE);
+        return this;
+    }
+
+    ControlData *momentaryFull() {
+        this->setMomentary(CONTROL_MOMENTARY_FULL);
+        return this;
+    }
+
+    void setMomentary(uint8_t mtry) {
+        this->specs |= mtry;
     }
 
     void setType(uint8_t type) {
@@ -120,7 +132,7 @@ public:
     }
 
     uint8_t getStage() {
-        return this->specs & CTRL_MOMENTARY_STAGE3;
+        return this->specs & CTRL_MOMENTARY_STAGE7;
     }
 
     void setStage0() {
@@ -136,9 +148,37 @@ public:
     }
 
     void setStage3() {
-        this->specs |= CTRL_MOMENTARY_STAGE3;
+        this->specs = (this->specs & CTRL_MOMENTARY_STAGEMASK) | CTRL_MOMENTARY_STAGE3;
     }
 
+    void setStage4() {
+        this->specs = (this->specs & CTRL_MOMENTARY_STAGEMASK) | CTRL_MOMENTARY_STAGE4;
+    }
+
+    void setStage5() {
+        this->specs = (this->specs & CTRL_MOMENTARY_STAGEMASK) | CTRL_MOMENTARY_STAGE5;
+    }
+
+    void setStage6() {
+        this->specs = (this->specs & CTRL_MOMENTARY_STAGEMASK) | CTRL_MOMENTARY_STAGE6;
+    }
+
+    void setStage7() {
+        this->specs |= CTRL_MOMENTARY_STAGE7;
+    }
+
+    ControlData *i() {
+        this->setStage1();
+        return this;
+    }
+
+    ControlData *minIdle(uint8_t idle) {
+        this->button[2] = idle;
+    }
+
+    /** Actualiza el temporizador
+     * @return: -1: No ha saltado el timeout. 0: Timeout expirado
+     **/
     uint8_t loop(uint8_t elapsed) {
         if(this->timeout == 0) return 0; // Timeout ya finalizado
 
@@ -149,11 +189,6 @@ public:
 
         this->timeout -= elapsed;
         return -1; // Timeout suficiente todavía
-    }
-
-    // Funciones de parametrización
-    ControlData *i() {
-        this->specs ^= momentary;
     }
 };
 

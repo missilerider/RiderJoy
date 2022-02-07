@@ -14,10 +14,13 @@ public:
 
     // Config
     uint8_t getHighestJoyButton();
+    static uint8_t getHighestJoyButton(ControlData *d);
     Switch3p *momentary();
     Switch3p *i();
 
     // Process
     void init();
+    static void init(ControlData *d);
     void process(Joystick_ *j);
+    static void process(ControlData *d, Joystick_ *j, uint8_t elapsed);
 };

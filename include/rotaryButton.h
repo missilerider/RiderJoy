@@ -13,8 +13,12 @@ public:
 
     // Config
     uint8_t getHighestJoyButton();
+    static uint8_t getHighestJoyButton(ControlData *d);
     RotaryButton *minIdle(uint16_t idle);
 
     // Process
+    static void poll(ControlData *d);
+    static void init(ControlData *d);
     void process(Joystick_ *j);
+    static void process(ControlData *d, Joystick_ *j, uint8_t elapsed);
 };
