@@ -18,15 +18,12 @@
  * MOMENTARY_MS para rotatorios y otros con cambio rápido, como rotary encoders
  * MOMENTARY_LONG_MS para pulsaciones lentas, como botones o switches
  */
-//#define MOMENTARY_MS    50
-#define MOMENTARY_MS    20
-//#define IDLE_MS         20
-#define IDLE_MS         20
 
-#define MOMENTARY_LONG_MS   250
-//#define MOMENTARY_LONG_MS   200
-#define IDLE_LONG_MS        250
-//#define IDLE_LONG_MS        80
+#define MOMENTARY_MS    30
+#define IDLE_MS         15
+
+#define MOMENTARY_LONG_MS   200
+#define IDLE_LONG_MS        80
 
 /** Milisegundos a esperar para cancelar la aceleración de un rotary axis
  */
