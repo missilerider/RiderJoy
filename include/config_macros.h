@@ -12,6 +12,7 @@
 #define ADD_POT(i, a) ((c[last++].setup(CONTROL_TYPE_POT, i, a)))
 #define _ADD_POT(i, a) ((Pot*)(c[last++] = new Pot(i, a)))
 
+#define ADD_ROTARY_BUTTONS(i1, i2, j1, j2, s) ((c[last++].setupRotary(CONTROL_TYPE_ROTARY_B, i1, i2, j1, j2, s)))
 #define _ADD_ROTARY_BUTTONS(i1, i2, j1, j2, s) ((RotaryButton*)(c[last++] = new RotaryButton(i1, i2, j1, j2, s)))
 
 #define _ADD_ROTARY_AXIS(i1, i2, a, s) ((RotaryAxis*)(c[last++] = new RotaryAxis(i1, i2, a, s)))

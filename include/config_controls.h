@@ -16,8 +16,8 @@ for(kk = 0; kk < 1; kk++) {
     //p(kk); p("/"); pln(freeMemory());
 }
 */
-uint8_t b = 0;
 #define B   (b++)
+uint8_t b = 0;
 
 ADD_BUTTON(PIN(4), B); //  - 
 ADD_BUTTON(PIN(4), B)->momentary(); //  - 
@@ -35,9 +35,9 @@ ADD_SWITCH2(PIN(4), B, B)->momentaryFull();
 
 */
 
-ADD_POT(A0, AXIS_X);
+//ADD_POT(A0, AXIS_X);
 
-//ADD_ROTARY_BUTTONS(PIN(6), PIN(7), 33, 32, 2); //  - 
+ADD_ROTARY_BUTTONS(PIN(8), PIN(9), 4, 5, 2); //  - 
 
 
 /*

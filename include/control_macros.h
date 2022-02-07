@@ -49,6 +49,8 @@ union ControlData {
 #define CTRL_MOMENTARY_STAGE7   0b11100000
 #define CTRL_MOMENTARY_STAGEMASK    0b00011111
 
+#define CTRL_GET_STAGE_BIT(d, bit)  ((d->specs >> (5 + bit)) & 0b1)
+
 class ControlData {
 public:
     uint8_t button[3];
@@ -105,6 +107,32 @@ public:
         return this;
     }
 
+    ControlData *setupRotary(uint8_t type, uint8_t i1, uint8_t i2, uint8_t b1, uint8_t b2, uint8_t step) {
+        this->button[0] = b1;
+        this->button[1] = b2;
+        this->button[2] = 0; // step inicial
+        this->specs = 0;
+        this->pin[0] = i1;
+        this->pin[1] = i2;
+        this->timeout = 0;
+
+        this->setMomentary(CONTROL_MOMENTARY_NO); // bits lastA y lastB a 00
+
+        switch(step) {
+            default:
+            case 1: this->setStage0(); break;
+            case 2: this->setStage2(); break;
+            case 4: this->setStage4(); break;
+            case 8: this->setStage6(); break;
+        }
+
+        this->setType(type);
+
+        return this;
+    }
+
+
+
     ControlData *momentary() {
         this->setMomentary(CONTROL_MOMENTARY_SIMPLE);
         return this;
@@ -116,7 +144,11 @@ public:
     }
 
     void setMomentary(uint8_t mtry) {
-        this->specs |= mtry;
+//        Serial1.println("Set Momentary:");
+//        Serial1.println(this->specs, BIN);
+//        Serial1.println(mtry, BIN);
+        this->specs = (this->specs & (0xFF - CTRLMASK_MOMENTARY)) | mtry;
+//        Serial1.println(this->specs, BIN);
     }
 
     void setType(uint8_t type) {
@@ -133,6 +165,20 @@ public:
 
     uint8_t getStage() {
         return this->specs & CTRL_MOMENTARY_STAGE7;
+    }
+
+    uint8_t getStageBit(uint8_t bit) {
+        return ((this->specs & CTRL_MOMENTARY_STAGE1) >> (5 + bit));
+    }
+
+    void setStageBit(uint8_t bit, uint8_t value) {
+        if(value) {
+            // set
+            this->specs |= 0b1 << (bit + 5);
+        } else {
+            // clear
+            this->specs &= ~(0b1 << (bit + 5));
+        }
     }
 
     void setStage0() {
@@ -174,6 +220,7 @@ public:
 
     ControlData *minIdle(uint8_t idle) {
         this->button[2] = idle;
+        return this;
     }
 
     /** Actualiza el temporizador

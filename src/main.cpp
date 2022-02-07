@@ -25,7 +25,7 @@
 #define UPDATEMILLIS 10 // Milisegundos entre actualizaciones de USB
 
 ControlData ctrl[MAX_CONTROLS];
-Control *pollCtrl[MAX_ROTARIES];
+ControlData *pollCtrl[MAX_ROTARIES];
 uint8_t numC, numPoll;
 
 Joystick_ *joy;
@@ -114,17 +114,19 @@ void setup() {
 
   k = 0;
   for(n = 0; n < numC; n++) {
-    //ctrl[n]->init();
     Control::init(&ctrl[n]);
-//    if(Control::hasPoll(ctrl[n])) {
-//      pollCtrl[k++] = ctrl[n];
-//    }
+
+    if(Control::hasPoll(&ctrl[n])) {
+      pollCtrl[k++] = &ctrl[n];
+    }
   }
 
   numPoll = k;
 
   p("Numpoll: ");
   pln(numPoll);
+  p("Controls: ");
+  pln(numC);
 
 #ifdef ENABLE_FN_NUMPAD
 FnNumpad::setup(FN_NUMPAD_PIN0, FN_NUMPAD_PIN1, FN_NUMPAD_PIN2, FN_NUMPAD_PIN3, FN_NUMPAD_PIN4, FN_NUMPAD_PIN5, FN_NUMPAD_PIN6);
@@ -135,8 +137,8 @@ void loop() {
   now = millis();
 
   // Polling a to meter
-  for(n = 0; n < numPoll; n++) {
-    pollCtrl[n]->poll();
+  for(m = 0; m < numPoll; m++) {
+      Control::poll(pollCtrl[m]);
   }
 
   // Si no es momento de actualizar, salimos
@@ -147,7 +149,7 @@ void loop() {
     Control::process(&ctrl[n], joy, (uint8_t)(now - lastUpdate));
 
     for(m = 0; m < numPoll; m++) {
-      pollCtrl[m]->poll();
+      Control::poll(pollCtrl[m]);
     }
   }
 

@@ -208,6 +208,10 @@ bool Control::hasPoll(ControlData *d) {
     }
 }
 
+void Control::poll(ControlData *d) {
+    RotaryButton::poll(d);
+}
+
 void Control::process(ControlData *d, Joystick_ *j, uint8_t elapsed) {
     switch(d->getType()) {
         case CONTROL_TYPE_BUTTON:

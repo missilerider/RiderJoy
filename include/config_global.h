@@ -19,9 +19,9 @@
  * MOMENTARY_LONG_MS para pulsaciones lentas, como botones o switches
  */
 //#define MOMENTARY_MS    50
-#define MOMENTARY_MS    250
+#define MOMENTARY_MS    20
 //#define IDLE_MS         20
-#define IDLE_MS         250
+#define IDLE_MS         20
 
 #define MOMENTARY_LONG_MS   250
 //#define MOMENTARY_LONG_MS   200

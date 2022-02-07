@@ -43,12 +43,10 @@ public:
     static void getAxisRequirements(ControlData *d, uint8_t *axisArray);
     
     // Process
-    virtual void process(Joystick_ *j)=0;
     static void process(ControlData *d, Joystick_ *j, uint8_t elapsed);
 
-    virtual bool hasPoll() { return false; }
     static bool hasPoll(ControlData *d);
-    virtual void poll() {};
+    static void poll(ControlData *d);
 
     static void setOutput(Input pin, uint8_t value);
     static uint8_t readDigital(Input pin);
