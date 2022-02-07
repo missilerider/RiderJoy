@@ -1,3 +1,4 @@
+/*
 //#define ENABLE_FN_NUMPAD
 #ifdef ENABLE_FN_NUMPAD
     #define FN_NUMPAD_PIN0 PIN(4)
@@ -15,7 +16,7 @@ for(kk = 0; kk < 1; kk++) {
     ADD_BUTTON(PIN(5), kk); //  - 
     //p(kk); p("/"); pln(freeMemory());
 }
-*/
+* /
 #define B   (b++)
 uint8_t b = 0;
 
@@ -33,14 +34,14 @@ ADD_SWITCH2(PIN(4), B, B);
 ADD_SWITCH2(PIN(4), B, B)->momentary();
 ADD_SWITCH2(PIN(4), B, B)->momentaryFull();
 
-*/
+* /
 
 //ADD_POT(A0, AXIS_X);
 
 ADD_ROTARY_BUTTONS(PIN(8), PIN(9), 4, 5, 2); //  - 
 
 
-/*
+/ *
 c[1].setMomentary(CONTROL_MOMENTARY_SIMPLE);
 c[2].setMomentary(CONTROL_MOMENTARY_FULL);
 
@@ -55,7 +56,6 @@ pln(freeMemory());
 
 // Config UFC
 
-/*
 ADD_BUTTON(MCP0(0), 0); //  - 
 ADD_BUTTON(MCP0(1), 1); //  - 
 ADD_BUTTON(MCP0(2), 2); //  - 
@@ -79,7 +79,7 @@ ADD_BUTTON(MCP1(3), 19); //  -
 ADD_BUTTON(MCP1(4), 20); //  - 
 ADD_BUTTON(MCP1(5), 21); //  - 
 
-ADD_SWITCH3(MCP1(6), MCP1(7), 22, 23, 36)->momentary();
+ADD_SWITCH3(MCP1(6), MCP1(7), 22, 23, 36)->momentaryFull();
 
 ADD_BUTTON(MCP1(8), 24); //  - 
 ADD_BUTTON(MCP1(9), 25); //  - 
@@ -94,12 +94,10 @@ ADD_POT(A0, AXIS_X);
 ADD_POT(A1, AXIS_Y);
 ADD_POT(A2, AXIS_Z);
 
-ADD_SWITCH3(MCP1(14), MCP1(15), 30, 31, 40)->momentary();
-ADD_SWITCH3(PIN(5), PIN(4), 37, 38, 39)->momentary();
+ADD_SWITCH3(MCP1(14), MCP1(15), 30, 31, 40)->momentaryFull();
+ADD_SWITCH3(PIN(5), PIN(4), 37, 38, 39)->momentaryFull();
 
 ADD_BUTTON(MCP2(8), 41); //  - 
 ADD_BUTTON(MCP2(9), 42); //  - 
 ADD_BUTTON(MCP2(10), 43); //  - 
 ADD_SWITCH2(MCP2(11), 44, 45)->momentary(); //  - 
-
-*/
