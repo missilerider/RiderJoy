@@ -1,15 +1,4 @@
 /*
-//#define ENABLE_FN_NUMPAD
-#ifdef ENABLE_FN_NUMPAD
-    #define FN_NUMPAD_PIN0 PIN(4)
-    #define FN_NUMPAD_PIN1 PIN(5)
-    #define FN_NUMPAD_PIN2 PIN(6)
-    #define FN_NUMPAD_PIN3 PIN(7)
-    #define FN_NUMPAD_PIN4 PIN(8)
-    #define FN_NUMPAD_PIN5 PIN(9)
-    #define FN_NUMPAD_PIN6 PIN(15)
-#endif
-
 /*
 int kk = 0;
 for(kk = 0; kk < 1; kk++) {
@@ -101,3 +90,14 @@ ADD_BUTTON(MCP2(8), 41); //  -
 ADD_BUTTON(MCP2(9), 42); //  - 
 ADD_BUTTON(MCP2(10), 43); //  - 
 ADD_SWITCH2(MCP2(11), 44, 45)->momentary(); //  - 
+
+#ifdef ENABLE_FN_NUMPAD
+    #define FN_NUMPAD_PIN0 MCP2(15) // Negro
+    #define FN_NUMPAD_PIN1 MCP2(14) // Amarillo
+    #define FN_NUMPAD_PIN2 MCP2(7) // Verde
+    #define FN_NUMPAD_PIN3 MCP2(6) // Rojo
+    #define FN_NUMPAD_PIN4 MCP2(13) // Azul
+    #define FN_NUMPAD_PIN5 MCP2(5) // Blanco(1)
+    #define FN_NUMPAD_PIN6 MCP2(12) // Blanco(2)
+#endif
+

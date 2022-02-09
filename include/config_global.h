@@ -29,6 +29,7 @@
  */
 #define ROTARY_IDLE_TIMEOUT     20
 
+#define ENABLE_FN_NUMPAD
 
 /** Se puede conectar un multiplexor de puertos analógicos ("AMUX") (74HC4067) para 
  * utilizar 16 entradas analógicas en un solo pin analógico del Arduino (AMUX_PIN_INx).

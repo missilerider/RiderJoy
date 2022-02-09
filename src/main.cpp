@@ -34,7 +34,7 @@ Adafruit_MCP23X17 mcp[8];
 unsigned long now;
 unsigned long lastUpdate = 0;
 
-uint8_t n, m;
+uint8_t n, m, delta;
 
 void setup() {
 #ifdef DEBUG
@@ -63,6 +63,11 @@ void setup() {
   pln("TEST..................");
 
   Control::prepare();
+
+#ifdef ENABLE_FN_NUMPAD
+  FnNumpad::begin();
+#endif
+
 
   readConfig(ctrl, &numC);
 
@@ -129,32 +134,37 @@ void setup() {
   pln(numC);
 
 #ifdef ENABLE_FN_NUMPAD
-FnNumpad::setup(FN_NUMPAD_PIN0, FN_NUMPAD_PIN1, FN_NUMPAD_PIN2, FN_NUMPAD_PIN3, FN_NUMPAD_PIN4, FN_NUMPAD_PIN5, FN_NUMPAD_PIN6);
+  FnNumpad::setup(FN_NUMPAD_PIN0, FN_NUMPAD_PIN1, FN_NUMPAD_PIN2, FN_NUMPAD_PIN3, FN_NUMPAD_PIN4, FN_NUMPAD_PIN5, FN_NUMPAD_PIN6);
 #endif
 }
 
+// Revisa las entradas de los encoders por si cambian
+void doPoll() {
+  for(m = 0; m < numPoll; m++) {
+    Control::poll(pollCtrl[m]);
+  }
+}
+
 void loop() {
+  doPoll();
+
   now = millis();
 
-  // Polling a to meter
-  for(m = 0; m < numPoll; m++) {
-      Control::poll(pollCtrl[m]);
-  }
-
+  delta = (uint8_t)(now - lastUpdate);
   // Si no es momento de actualizar, salimos
-  if(now - lastUpdate < UPDATEMILLIS) return;
+  if(delta < UPDATEMILLIS) return;
 
   // Procesa todos los controles
   for(n = 0; n < numC; n++) {
-    Control::process(&ctrl[n], joy, (uint8_t)(now - lastUpdate));
+    Control::process(&ctrl[n], joy, delta);
 
-    for(m = 0; m < numPoll; m++) {
-      Control::poll(pollCtrl[m]);
-    }
+    doPoll();
   }
 
   // Actualiza el joystick
   joy->sendState();
+
+  doPoll();
 
   // Si esta configurado, lee el bloque numerico y pulsa las teclas de función
   #ifdef ENABLE_FN_NUMPAD
