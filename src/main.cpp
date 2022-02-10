@@ -44,30 +44,7 @@ void setup() {
   pln("");
   pln("RiderIndustries HOTAS init...");
 
-  pln("TEST..................");
-
-  ControlData d;
-  d.specs = 0xFF;
-  pbitln(d.getStage());
-  d.setStage0();
-  pbitln(d.getStage());
-  d.setStage1();
-  pbitln(d.getStage());
-  d.setStage2();
-  pbitln(d.getStage());
-  d.setStage3();
-  pbitln(d.getStage());
-  d.setStage0();
-  pbitln(d.getStage());
-
-  pln("TEST..................");
-
   Control::prepare();
-
-#ifdef ENABLE_FN_NUMPAD
-  FnNumpad::begin();
-#endif
-
 
   readConfig(ctrl, &numC);
 
@@ -135,6 +112,8 @@ void setup() {
 
 #ifdef ENABLE_FN_NUMPAD
   FnNumpad::setup(FN_NUMPAD_PIN0, FN_NUMPAD_PIN1, FN_NUMPAD_PIN2, FN_NUMPAD_PIN3, FN_NUMPAD_PIN4, FN_NUMPAD_PIN5, FN_NUMPAD_PIN6);
+  pln("Numpad OK");
+  delay(1000); // Si no, peta al iniciar
 #endif
 }
 

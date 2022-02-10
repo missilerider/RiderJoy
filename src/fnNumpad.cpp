@@ -28,14 +28,7 @@ uint8_t FnNumpad::p4 = 0;
 uint8_t FnNumpad::p5 = 0;
 uint8_t FnNumpad::p6 = 0;
 
-Keyboard_ *kbd;
-
 uint16_t FnNumpad::status = 0;
-
-void FnNumpad::begin() {
-    kbd = new Keyboard_();
-    kbd->begin();
-}
 
 void FnNumpad::setup(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3, uint8_t p4, uint8_t p5, uint8_t p6) {
     FnNumpad::status = 0;
@@ -70,6 +63,8 @@ void FnNumpad::setup(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3, uint8_t p4,
     Control::setupInput(FnNumpad::p3);
     Control::setupInput(FnNumpad::p5);
     Control::setupInput(FnNumpad::p6);
+
+    Keyboard.begin();
 }
 
 void FnNumpad::process() {
@@ -90,13 +85,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_1)) {
             p("_F1_ ");
             PRESS(FN_1);
-            kbd->press(KEY_F1);
+            Keyboard.press(KEY_F1);
         }
     } else {
         if(IS_PRESSED(FN_1)) {
             p("^F1^ ");
             RELEASE(FN_1);
-            kbd->release(KEY_F1);
+            Keyboard.release(KEY_F1);
         }
     }
 
@@ -105,13 +100,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_2)) {
             p("_F2_ ");
             PRESS(FN_2);
-            kbd->press(KEY_F2);
+            Keyboard.press(KEY_F2);
         }
     } else {
         if(IS_PRESSED(FN_2)) {
             p("^F2^ ");
             RELEASE(FN_2);
-            kbd->release(KEY_F2);
+            Keyboard.release(KEY_F2);
         }
     }
 
@@ -120,13 +115,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_3)) {
             p("_F3_ ");
             PRESS(FN_3);
-            kbd->press(KEY_F3);
+            Keyboard.press(KEY_F3);
         }
     } else {
         if(IS_PRESSED(FN_3)) {
             p("^F3^ ");
             RELEASE(FN_3);
-            kbd->release(KEY_F3);
+            Keyboard.release(KEY_F3);
         }
     }
     Control::setupInput(FnNumpad::p1);
@@ -138,13 +133,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_4)) {
             p("_F4_ ");
             PRESS(FN_4);
-            kbd->press(KEY_F4);
+            Keyboard.press(KEY_F4);
         }
     } else {
         if(IS_PRESSED(FN_4)) {
             p("^F4^ ");
             RELEASE(FN_4);
-            kbd->release(KEY_F4);
+            Keyboard.release(KEY_F4);
         }
     }
 
@@ -153,13 +148,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_5)) {
             p("_F5_ ");
             PRESS(FN_5);
-            kbd->press(KEY_F5);
+            Keyboard.press(KEY_F5);
         }
     } else {
         if(IS_PRESSED(FN_5)) {
             p("^F5^ ");
             RELEASE(FN_5);
-            kbd->release(KEY_F5);
+            Keyboard.release(KEY_F5);
         }
     }
 
@@ -168,13 +163,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_6)) {
             p("_F6_ ");
             PRESS(FN_6);
-            kbd->press(KEY_F6);
+            Keyboard.press(KEY_F6);
         }
     } else {
         if(IS_PRESSED(FN_6)) {
             p("^F6^ ");
             RELEASE(FN_6);
-            kbd->release(KEY_F6);
+            Keyboard.release(KEY_F6);
         }
     }
     Control::setupInput(FnNumpad::p6);
@@ -186,13 +181,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_7)) {
             p("_F7_ ");
             PRESS(FN_7);
-            kbd->press(KEY_F7);
+            Keyboard.press(KEY_F7);
         }
     } else {
         if(IS_PRESSED(FN_7)) {
             p("^F7^ ");
             RELEASE(FN_7);
-            kbd->release(KEY_F7);
+            Keyboard.release(KEY_F7);
         }
     }
 
@@ -201,13 +196,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_8)) {
             p("_F8_ ");
             PRESS(FN_8);
-            kbd->press(KEY_F8);
+            Keyboard.press(KEY_F8);
         }
     } else {
         if(IS_PRESSED(FN_8)) {
             p("^F8^ ");
             RELEASE(FN_8);
-            kbd->release(KEY_F8);
+            Keyboard.release(KEY_F8);
         }
     }
 
@@ -216,13 +211,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_9)) {
             p("_F9_ ");
             PRESS(FN_9);
-            kbd->press(KEY_F9);
+            Keyboard.press(KEY_F9);
         }
     } else {
         if(IS_PRESSED(FN_9)) {
             p("^F9^ ");
             RELEASE(FN_9);
-            kbd->release(KEY_F9);
+            Keyboard.release(KEY_F9);
         }
     }
     Control::setupInput(FnNumpad::p5);
@@ -234,13 +229,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_STAR)) {
             p("_FSTAR_ ");
             PRESS(FN_STAR);
-            kbd->press(KEY_F11);
+            Keyboard.press(KEY_F11);
         }
     } else {
         if(IS_PRESSED(FN_STAR)) {
             p("^FSTAR^ ");
             RELEASE(FN_STAR);
-            kbd->release(KEY_F11);
+            Keyboard.release(KEY_F11);
         }
     }
 
@@ -249,13 +244,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_0)) {
             p("_F0_ ");
             PRESS(FN_0);
-            kbd->press(KEY_F10);
+            Keyboard.press(KEY_F10);
         }
     } else {
         if(IS_PRESSED(FN_0)) {
             p("^F0^ ");
             RELEASE(FN_0);
-            kbd->release(KEY_F10);
+            Keyboard.release(KEY_F10);
         }
     }
 
@@ -264,13 +259,13 @@ void FnNumpad::process() {
         if(!IS_PRESSED(FN_SHARP)) {
             p("_FSHARP_ ");
             PRESS(FN_SHARP);
-            kbd->press(KEY_F12);
+            Keyboard.press(KEY_F12);
         }
     } else {
         if(IS_PRESSED(FN_SHARP)) {
             p("^FSHARP^ ");
             RELEASE(FN_SHARP);
-            kbd->release(KEY_F12);
+            Keyboard.release(KEY_F12);
         }
     }
     Control::setupInput(FnNumpad::p3);
