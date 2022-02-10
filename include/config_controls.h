@@ -46,6 +46,7 @@ pln(freeMemory());
 // Config UFC
 
 ADD_BUTTON(MCP0(0), 0); //  - 
+/*
 ADD_BUTTON(MCP0(1), 1); //  - 
 ADD_BUTTON(MCP0(2), 2); //  - 
 ADD_BUTTON(MCP0(3), 3); //  - 
@@ -90,7 +91,7 @@ ADD_BUTTON(MCP2(8), 41); //  -
 ADD_BUTTON(MCP2(9), 42); //  - 
 ADD_BUTTON(MCP2(10), 43); //  - 
 ADD_SWITCH2(MCP2(11), 44, 45)->momentary(); //  - 
-
+*/
 #ifdef ENABLE_FN_NUMPAD
     #define FN_NUMPAD_PIN0 MCP2(15) // Negro
     #define FN_NUMPAD_PIN1 MCP2(14) // Amarillo
