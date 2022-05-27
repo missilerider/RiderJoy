@@ -57,7 +57,6 @@ pln(freeMemory());
 
 
 // Config UFC
-
 ADD_BUTTON(MCP0(0), 0); //  - 
 ADD_BUTTON(MCP0(1), 1); //  - 
 ADD_BUTTON(MCP0(2), 2); //  - 
@@ -89,7 +88,6 @@ ADD_BUTTON(MCP1(10), 26); //  -
 ADD_BUTTON(MCP1(11), 27); //  - 
 ADD_BUTTON(MCP1(12), 28); //  - 
 ADD_BUTTON(MCP1(13), 29); //  - 
-
 ADD_ROTARY_BUTTONS(PIN(6), PIN(7), 33, 32, 2); //  - 
 ADD_ROTARY_BUTTONS(PIN(8), PIN(9), 35, 34, 2); //  - 
 ADD_POT(A0, AXIS_X);
@@ -103,4 +101,3 @@ ADD_BUTTON(MCP2(8), 41); //  -
 ADD_BUTTON(MCP2(9), 42); //  - 
 ADD_BUTTON(MCP2(10), 43); //  - 
 ADD_SWITCH2(MCP2(11), 44, 45)->momentary(); //  - 
-

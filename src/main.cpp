@@ -113,7 +113,7 @@ void setup() {
 #ifdef ENABLE_FN_NUMPAD
   FnNumpad::setup(FN_NUMPAD_PIN0, FN_NUMPAD_PIN1, FN_NUMPAD_PIN2, FN_NUMPAD_PIN3, FN_NUMPAD_PIN4, FN_NUMPAD_PIN5, FN_NUMPAD_PIN6);
   pln("Numpad OK");
-  delay(1000); // Si no, peta al iniciar
+  delay(200); // Si no, peta al iniciar
 #endif
 }
 
@@ -147,8 +147,10 @@ void loop() {
 
   // Si esta configurado, lee el bloque numerico y pulsa las teclas de función
   #ifdef ENABLE_FN_NUMPAD
-    FnNumpad::process();
+    FnNumpad::process(doPoll);
   #endif
+
+  doPoll();
 
   lastUpdate = now;
 }

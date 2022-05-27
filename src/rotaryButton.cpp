@@ -25,6 +25,8 @@ void RotaryButton::poll(ControlData *d) {
     // Si lastA = lastB = 1, getMomentary devolverá dos bits ...11...
 
     if((lastA == a || lastB == b) && (lastA != a || lastB != b)) {
+        p(a);
+        pln(b);
         if(a == lastA) {
             if(a == LOW) {
                 if(b == LOW) *step -= 1;

@@ -67,12 +67,19 @@ void FnNumpad::setup(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3, uint8_t p4,
     Keyboard.begin();
 }
 
+void zero() {}
+
 void FnNumpad::process() {
+    FnNumpad::process(zero);
+}
+
+void FnNumpad::process(void (*doPoll)()) {
     Control::setupInput(FnNumpad::p1);
     Control::setupInput(FnNumpad::p3);
     Control::setupInput(FnNumpad::p5);
     Control::setupInput(FnNumpad::p6);
 
+    doPoll();
 
     Control::setupInput(FnNumpad::p3);
     Control::setupInput(FnNumpad::p5);
@@ -95,6 +102,8 @@ void FnNumpad::process() {
         }
     }
 
+    doPoll();
+
     if(!Control::readDigital(FnNumpad::p0)) {
         // F2
         if(!IS_PRESSED(FN_2)) {
@@ -109,6 +118,8 @@ void FnNumpad::process() {
             Keyboard.release(KEY_F2);
         }
     }
+
+    doPoll();
 
     if(!Control::readDigital(FnNumpad::p4)) {
         // F3
@@ -125,6 +136,8 @@ void FnNumpad::process() {
         }
     }
     Control::setupInput(FnNumpad::p1);
+
+    doPoll();
 
     Control::setupOutput(FnNumpad::p6);
     Control::setOutput(FnNumpad::p6, LOW);
@@ -143,6 +156,8 @@ void FnNumpad::process() {
         }
     }
 
+    doPoll();
+
     if(!Control::readDigital(FnNumpad::p0)) {
         // F5
         if(!IS_PRESSED(FN_5)) {
@@ -157,6 +172,8 @@ void FnNumpad::process() {
             Keyboard.release(KEY_F5);
         }
     }
+
+    doPoll();
 
     if(!Control::readDigital(FnNumpad::p4)) {
         // F6
@@ -173,6 +190,8 @@ void FnNumpad::process() {
         }
     }
     Control::setupInput(FnNumpad::p6);
+
+    doPoll();
 
     Control::setupOutput(FnNumpad::p5);
     Control::setOutput(FnNumpad::p5, LOW);
@@ -206,6 +225,8 @@ void FnNumpad::process() {
         }
     }
 
+    doPoll();
+
     if(!Control::readDigital(FnNumpad::p4)) {
         // F9
         if(!IS_PRESSED(FN_9)) {
@@ -221,6 +242,8 @@ void FnNumpad::process() {
         }
     }
     Control::setupInput(FnNumpad::p5);
+
+    doPoll();
 
     Control::setupOutput(FnNumpad::p3);
     Control::setOutput(FnNumpad::p3, LOW);
@@ -239,6 +262,8 @@ void FnNumpad::process() {
         }
     }
 
+    doPoll();
+
     if(!Control::readDigital(FnNumpad::p0)) {
         // F10
         if(!IS_PRESSED(FN_0)) {
@@ -253,6 +278,8 @@ void FnNumpad::process() {
             Keyboard.release(KEY_F10);
         }
     }
+
+    doPoll();
 
     if(!Control::readDigital(FnNumpad::p4)) {
         // F12

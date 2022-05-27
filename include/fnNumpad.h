@@ -11,5 +11,6 @@ public:
     static void setup(uint8_t p0, uint8_t p1, uint8_t p2, uint8_t p3, uint8_t p4, uint8_t p5, uint8_t p6);
 
     static void process();
+    static void process(void (*doPoll)());
 };
 
